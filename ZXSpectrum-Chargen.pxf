@@ -1,0 +1,9 @@
+cell-width 8
+cell-height 8
+baseline 1
+circular-dots
+variant-bit Inverse /columns ^FF
+
+charset zx-spectrum.cs
+
+binary-8x8 charcodes 20 .. 7F
