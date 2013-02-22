@@ -10,6 +10,8 @@ require 'zlib'
 
 module Pixitie
 
+  IDENT = 'Pixitie 1.0.0'
+
 #### Help output
 
   USAGE = <<'EOU'
@@ -32,6 +34,7 @@ font.
       --list-builtins     list the builtin resources
       --list-fonts        list available fonts
   -h, --help              brief usage summary
+      --version           display version identifier
 
 EOU
 
@@ -2514,7 +2517,8 @@ EOU
         ['--extract', '-x', GetoptLong::NO_ARGUMENT],
         ['--list-builtins', GetoptLong::NO_ARGUMENT],
         ['--list-fonts', GetoptLong::NO_ARGUMENT],
-        ['--help', '-h', GetoptLong::NO_ARGUMENT]
+        ['--help', '-h', GetoptLong::NO_ARGUMENT],
+        ['--version', GetoptLong::NO_ARGUMENT]
       ).each do |opt, arg|
         case opt
         when '--font' then $fontname = arg
@@ -2530,6 +2534,7 @@ EOU
         when '--list-builtins' then mode = method :main_list_builtins
         when '--list-fonts' then mode = method :main_list_fonts
         when '--help' then print USAGE; exit
+        when '--version' then puts IDENT; exit
         else raise "Unknown option #{opt}"
         end
       end
