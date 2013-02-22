@@ -1,0 +1,218 @@
+This is Pixitie, a Ruby script emulating a dot matrix printer's output
+by PostScript.  It works by converting a pixel font into a PostScript
+Type 3 font, which it embeds into the generated PS file, and uses it
+as any other PostScript font.  This way, copy and paste works as
+expected in many PS viewers, such as Safari.
+
+While Pixitie was originally written specifically for dot matrix
+printer fonts, it can also be used for other kinds of pixel fonts.
+
+
+Embedded fonts
+--------------
+
+In order to attain a reasonable level of code mobility, some fonts
+have been included with the script.  You can add your own as PXF
+files.  The included fonts are EpsonFX80 and EpsonFX80-Italic together
+with their various variants such as EpsonFX80.Bold or
+EpsonFX80-Italic.Underscored.Wide, eight fonts from the CP/M
+utility of Bradford:
+
+* Bradford-1-Monospaced is a basic NLQ serif font
+* Bradford-2-Monospaced is a blocky NLQ sans serif font
+* Bradford-3-Monospaced is a more rounded NLQ sans serif font
+* Bradford-4-Monospaced is a draft quality font
+* Bradford-5-Monospaced is a compromise font of higher quality than
+  the draft font but higher printing speed (on original hardware) than
+  the NLQ fonts
+* Bradford-6-Monospaced is a slanted sans serif font
+* Bradford-7-Monospaced is a decorative 'computer' font
+* Bradford-8-Monospaced is a sans serif small caps font
+
+... and the ZXSpectrum-Chargen font.
+
+
+Using standard PostScript fonts
+-------------------------------
+
+Pixitie can use the standard PostScript fonts, as long as you have
+their metrics in the AFM form.  The metrics allows Pixitie to
+introduce line and page breaks in proper places (but note that it does
+not word-wrap):
+
+    $ ls -l ../font-data/Courier.afm 
+    -rw-r--r-- 1 dig dig 15677 Dec  6  2010 ../font-data/Courier.afm
+
+    $ echo 'Hello, world!' |
+    > ./pixitie - -R ../font-data/ -f Times-Italic -s 120
+    %!PS-Adobe-3.0
+    %%Pages: 1
+    %%PageOrder: Ascend
+    %%DocumentPaperSizes: A4
+    %%Orientation: Portrait
+    %%EndComments
+
+    %%BeginSetup
+    %%BeginFeature: *PageSize A4
+    << /PageSize [595.275590551181 841.889763779528] >> setpagedevice
+    %%EndFeature
+    %%EndSetup
+
+    %%Page: (1) 1
+    42.5196850393701 717.410078740157 moveto
+    0 setgray
+    /Times-Italic 120 selectfont
+    (Hello, wo) show
+    -466.68 -97.44 rmoveto
+    (rld!) show
+    showpage
+
+    %%Trailer
+    %%EOF
+
+In this case, Pixitie was asked to typeset "Hello, world!" in the font
+Times-Italic scaled to 120, or twelve times the normal size.  Pixitie
+typeset two lines, the first one containing "Hello, wo" and the second
+one containing "rld!".
+
+
+Anatomy of a PXF file
+---------------------
+
+As a standalone file, EpsonFX80.pxf, a simple draft font, looks like
+this:
+
+    charset epson-fx80.cs
+
+    aspect-ratio 6:5
+    horizontal-compression 0.5
+    circular-dots
+    baseline 2
+
+    include epson-fx80-variants.pxfi
+
+    00 008 014 040 114 0C0 014 040 038 004 000 000 000
+    01 038 044 010 144 090 044 010 044 030 000 000 000
+    02 000 078 000 104 080 004 000 078 004 000 000 000
+    03 000 038 044 100 0C4 000 044 038 000 000 000 000
+    ...
+
+The lines in the beginning define various aspects of the font: its
+special charset (dot matrix printers being popular before Unicode,
+Epson placed some useful characters, most importantly various
+diacriticised European letters, into the nonprintable ASCII range of
+0x00-0x1F), the shape of its grid and the dots, and where in relation
+to the grid's bottom the baseline should be.  The file
+<epson-fx80-variants.pxfi> defines some of the automatically
+calculated font variants for Epson-style fonts.  Then, column data
+follows in lines starting with the local charcode in hex followed by
+dot columns, also in hex.  The least significant bit is the bottom.
+
+Epson FX-80's characters necessarily had 12 columns of 12 bits each.
+Pixitie does not impose such a restriction: if you pass more columns,
+the letters will be wider; if less, narrower.  Similarly, if you place
+more bits in a column, the character will just be taller.
+
+For comparison, an NLQ font from the Bradford package looks like this:
+
+    charset bradford.cs
+
+    circular-dots
+    aspect-ratio 6:5
+    horizontal-compression 1/2
+    vertical-compression 1/2
+    baseline 2
+
+    20 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+    21 0000 0000 0000 7E08 FF9C 7E08 0000 0000 0000 0000 0000 0000
+    22 0000 0000 F800 0000 0000 0000 F800 0000 0000 0000 0000 0000
+    23 0840 0840 FFFC 0840 0840 0840 FFFC 0840 0840 0000 0000 0000
+    ...
+
+Bradford just defined glyphs for the ASCII printable range (but used
+some of them in ways better represented with different Unicode
+values).  Because this is an NLQ font, dots in each column can overlap
+so this font's pixel grid is compressed vertically as well as
+horizontally and its columns have 16 rather than 12 bits.
+
+
+Miscellaneous remarks
+---------------------
+
+Sometimes, a font -- let's call it Foo -- uses a unique charset.  When
+this happens, it's customary to describe the charset in Foo.cs, and it
+is not necessary to declare "charset Foo.cs" in Foo.pxf.  Whenever a
+PXF misses an explicit charset declaration, a private charset is
+implicitly used instead.
+
+A binary file -- let's call it foo.dat -- can be embedded in the
+Pixitie data tail as foo.dat.hex, encoded as an I8HEX (Intel 8-bit
+HEX) file.
+
+The included UnicodeData.txt belongs to version 6.1.0 of Unicode, and
+has been downloaded from
+<http://www.unicode.org/Public/UNIDATA/UnicodeData.txt>.
+
+As the resource tail format uses /.../ to mark filenames and lines
+beginning and ending in slashes can appear in base64 encoding, an easy
+workaround is to prefix a single space to each line in a base64
+resource.  The space is ignored by the base64 decoder but un-confuses
+the resource tail parser.
+
+The uncreatively named FONT?.BIN files are font data from the Bradford
+utility, downloaded from
+<http://www.zimmers.net/anonftp/pub/cpm/printer/bradford.arc>.  The
+program was written by Aaron Contorer and distributed as shareware.
+Note that only the fonts but not the program are included with
+Pixitie.
+
+
+Included non-Pixitie code
+-------------------------
+
+The Pixitie distribution includes bitmap font data from miscellaneous
+sources, and a small amount of non-Pixitie code.
+
+The Bradford utility is by Aaron Contorer and is not covered by the
+Apache Public License as Pixitie's own code is.  The file BRADFORD.INF
+from bradford.arc explains the intended copyright regime:
+
+    ATTENTION BULLETIN BOARD OPERATORS:  If you are one of those
+    diligent operators who tries to carefully ensure that no material
+    on their board is copyrighted, please understand:  Bradford IS
+    copyrighted, but I grant unlimited permission to copy it,
+    including via bulletin board.  I would like to ENCOURAGE you to
+    make Bradford available to as many people as possible.  If you
+    have any questions, contact me at the above address or via MCI
+    Mail at address 114-7890.  If you really have to, you can
+    find out my phone number at the above address and call me.
+
+    Thank you, peace on earth, and enjoy your new copy of Bradford.
+
+The DMP fonts are by Amstrad/Schneider, and have been extracted from
+the bitmap images available at
+<http://www.cpcwiki.eu/index.php/Amstrad/Schneider_Printer_Character_Sets>.
+
+The 'T', 'O', and 'M' Bradford fonts are by Stan Kazmiruk, downloaded
+from
+<http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/BRFONTS.LBR>.
+
+The Bradford Extra fonts are by Aaron Contorer and Fredric N. Loring,
+downloaded from
+<http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/EXTRAFON.LBR>.
+Note that the 'F' and 'L' font seems to have suffered some bit flips
+and the 'J' and 'K' fonts seem to exhibit poor frame synchronisation
+when they were Brad font sources; the top pixel of the star is seen at
+the bottom of right paren, and the bottom of comma hovers above the
+hyphen.  In the 'J' font, also the plus and the caret seem to be
+missing their right edges.
+
+
+Copyright status
+----------------
+
+Copyright (c) 2012-2013 Google Inc.
+Released as free software under the Apache License 2.0.
+(Authorisation tracking number OSSREQ#2236004.)
+
+Written by Andres Soolo.

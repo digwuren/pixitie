@@ -1,0 +1,40 @@
+BRFONTS.DOC
+-----------
+
+This library contains several revised/new fonts, etc. for use with
+Bradford:
+
+1) FONTT.BIN is a revised version of the original Font 1  ("T" for
+   "Typewriter"). A number of characters have been changed to make
+   them more like the standard PICA typeface, and the use of
+   serifs is more consistent.  I find this consistency more 
+   pleasing to the eye than the original version.
+
+2) FONTO.BIN is a slightly revised version of the original Font 9,
+   the "Orator" style.  The revisions include removal of serifs on
+   several characters to be consistent, since this is a plain
+   Gothic, or "san-serif" typeface.
+
+3) FONTM.BIN is a new miniature typeface which I created for a
+   label-making application where I wanted several sizes of type.
+   It was inspired by the small capitals used for the "lower-case"
+   portion of Font 8.  Try it with a Character Width of 1 - perfect
+   for printing contracts!!
+
+4) FONTMB. is the source list for FONTM.BIN.  Since BRADCON ignores
+   everything to the right of the ninth column, I put in the line
+   numbers, etc. as an aid to editting.
+
+5) ALLFONTS.1 is simply a revised and expanded version of the test
+   text distributed earlier.  Printing it provides a five page
+   reference showing all of the type fonts with the most useful
+   combinations of character widths, proportional spacing, etc.
+
+
+Yoõ caî accesó FONTT.BIÎ anä FONTO®BIN bù thå letteró "T¢ anä "O"
+respectively, or you can rename them to FONT1.BIN and FONT9.BIN,
+replacing the original versions, as I have done.
+
+
+Stan Kazmiruk
+1986-10-02
