@@ -31,7 +31,7 @@ RESOURCES = ascii.cs \
   NLQ401-Draft.cs NLQ401-Draft.pxf \
   NLQ401-Draft-Extra.cs NLQ401-Draft-Extra.pxf \
   DMP2000.pxf \
-  DMP3000-NLQ.pxf DMP3000-NLQ-Italic.pxf DMP3000-NLQ-Extra.pxf DMP3000-Draft-Extra.pxf \
+  DMP3000-NLQ.pxf DMP3000-NLQ-Italic.pxf DMP3000-NLQ-Extra.pxf DMP3000-Draft-Extra.pxf dmp3000-extra.cs \
   DMP3160-NLQ.pxf DMP3160-NLQ-Italic.pxf \
   DMP3160-Draft.pxf DMP3160-Draft-Italic.pxf \
   abridged-unicode.txt
