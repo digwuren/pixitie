@@ -19,6 +19,31 @@ require 'getoptlong'
 # Font 7 is a decorative "computer" font.
 # Font 8 is a small caps version of font 3.
 
+#### Ruby <1.9 portability layer
+
+unless "".respond_to? :getbyte then
+  class String
+    def bytesize
+      return length
+    end
+
+    def getbyte offset
+      return self[offset]
+    end
+
+    def byteslice anchor, length = nil
+      range = if length then
+        anchor ... anchor + length
+      else
+        anchor
+      end
+      return self[range]
+    end
+  end
+end
+
+#### Bit manipulations
+
 def weave_two b1, b2
   raise 'Assertion failed' if b1 < 0 or b2 < 0
   outbit = 1
@@ -33,6 +58,8 @@ def weave_two b1, b2
   end
   return output
 end
+
+#### Main code
 
 $charset = 'bradford.cs'
 $dump = false
@@ -50,7 +77,7 @@ GetoptLong::new(
 end
 
 font_data = $stdin.read
-unless font_data[0 .. 3] == "\x5F\x00\x15\x00" then
+unless font_data.byteslice(0, 4) == "\x5F\x00\x15\x00" then
   raise "Invalid magic"
 end
 
@@ -61,16 +88,16 @@ if $dump then
     puts
     print ' '
     (0 .. 8).each do |subofs|
-      printf ' %02X', font_data[char_offset + subofs]
+      printf ' %02X', font_data.getbyte(char_offset + subofs)
     end
     puts
     print ' '
     (9 .. 17).each do |subofs|
-      printf ' %02X', font_data[char_offset + subofs]
+      printf ' %02X', font_data.getbyte(char_offset + subofs)
     end
     puts
     (18 .. 20).each do |subofs|
-      printf ' %02X', font_data[char_offset + subofs]
+      printf ' %02X', font_data.getbyte(char_offset + subofs)
     end
     puts
   end
@@ -89,8 +116,8 @@ puts "baseline #$baseline"
 puts
 (0x20 .. 0x7E).each do |charcode|
   char_offset = 4 + 21 * (charcode - 0x20)
-  block1 = font_data[char_offset ... char_offset + 9]
-  block2 = font_data[char_offset + 9 ... char_offset + 18]
+  block1 = font_data.byteslice(char_offset, 9).unpack 'C*'
+  block2 = font_data.byteslice(char_offset + 9, 9).unpack 'C*'
   block = (0 .. 8).map{|i| weave_two block1[i], block2[i]}
   block.push 0, 0, 0
   printf "%02X", charcode
