@@ -183,7 +183,7 @@ EOU
       #
       # hex_file_name is only used for error reporting.
       def self::parse_i8hex hex_data, hex_file_name
-        bin_data = ""   # collects the result
+        bin_data = []   # collects the result
         endedp = false  # did we pass the terminal record?
         lineno = 1      # for error reporting
         fail = proc do |msg|
@@ -194,7 +194,7 @@ EOU
           unless line =~ /^:([\da-f][\da-f])+$/i then
             fail.call "invalid record"
           end
-          record = [line[1 .. -1]].pack 'H*'
+          record = [line[1 .. -1]].pack('H*').unpack 'C*'
 
           # Is the length field correct?
           unless record.length == 4 + record[0] + 1 then
@@ -203,7 +203,7 @@ EOU
 
           # Is the checksum correct?
           sum = 0
-          record.each_byte do |b|
+          record.each do |b|
             sum += b
           end
           unless sum & 0xFF == 0 then
@@ -220,7 +220,7 @@ EOU
             unless bin_data.length == declared_record_length then
               fail.call "wrong address"
             end
-            bin_data << record[4 .. -2]
+            bin_data += record[4 .. -2]
           when 1 then # terminal record
             if endedp then
               fail.call "multiple terminal records"
@@ -240,7 +240,7 @@ EOU
           end
         end
 
-        return bin_data
+        return bin_data.pack 'C*'
       end
 
       # load the builtin resources
@@ -265,8 +265,8 @@ EOU
       result = ''
       each_byte do |b|
         if (0x20 .. 0x7E).include? b then
-          result << '\\' if "\\()".include? b
-          result << b
+          result << '\\' if "\\()".include? b.chr
+          result << b.chr
         else
           result << sprintf('\\%03o', b)
         end
@@ -1400,7 +1400,7 @@ EOU
         # left.  If |colrange| is given, the zeroth column is the
         # leftmost.
         charcodes = charcodes.to_a
-        data = RES[resname]
+        data = RES[resname].unpack 'C*'
         unless data.length == charcodes.length * 8 then
           raise "Invalid binary resource #{resname}"
         end
