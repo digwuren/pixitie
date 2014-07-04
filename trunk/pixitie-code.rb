@@ -31,6 +31,7 @@ font.
   -S, --showcase          showcase these fonts
   -x, --extract           extract the specified builtin resources into
                           the current directory as standalone files
+      --obey-form-feed    break page at the FF (U+000C, ^L) char
       --list-builtins     list the builtin resources
       --list-fonts        list available fonts
   -h, --help              brief usage summary
@@ -2503,6 +2504,7 @@ EOU
       $page_size_name = 'A4'
       $margin = parse_length '15 mm'
       $min_line_spacing = nil
+      $obey_form_feed = false
       mode = method :main_vprinter
 
       GetoptLong::new(
@@ -2515,6 +2517,7 @@ EOU
         ['--output', '-o', GetoptLong::REQUIRED_ARGUMENT],
         ['--resources', '-R', GetoptLong::REQUIRED_ARGUMENT],
         ['--extract', '-x', GetoptLong::NO_ARGUMENT],
+        ['--obey-form-feed', GetoptLong::NO_ARGUMENT],
         ['--list-builtins', GetoptLong::NO_ARGUMENT],
         ['--list-fonts', GetoptLong::NO_ARGUMENT],
         ['--help', '-h', GetoptLong::NO_ARGUMENT],
@@ -2531,6 +2534,7 @@ EOU
         when '--output' then $output_filename = arg
         when '--resources' then RES.dir = arg
         when '--extract' then mode = method :main_extract_builtins
+        when '--obey-form-feed' then $obey_form_feed = true
         when '--list-builtins' then mode = method :main_list_builtins
         when '--list-fonts' then mode = method :main_list_fonts
         when '--help' then print USAGE; exit
@@ -2614,7 +2618,13 @@ EOU
       open_input.call filename do |port|
         port.each_line do |line|
           line.chomp!
-          $ts.typeset_utf8 line
+          line.unpack('U*').each do |c|
+            if c == 0x000C and $obey_form_feed then
+              $ts.form_feed
+            else
+              $ts.typeset_unicode_char c
+            end
+          end
           $ts.newline
         end
       end
