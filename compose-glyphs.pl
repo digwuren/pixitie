@@ -4,13 +4,32 @@ use strict;
 
 my %strokes;
 
+sub or_vectors {
+  my ($vec1, @vecs) = @_;
+  my @result = @$vec1;
+  for my $vec2 (@vecs) {
+    for my $i (0 ... $#$vec2) {
+      $result[$i] = 0 unless defined $result[$i];
+      $result[$i] |= $vec2->[$i];
+    }
+  }
+  return wantarray ? @result : \@result;
+}
+
 sub handle ($);
 
 sub handle ($) {
   my ($line) = @_;
-  if (m/^\.stroke\s+(\w+)\s+/) {
-    die "dupliccate stroke '$1'" if exists $strokes{$1};
+  if (m/^\.stroke\s+([\w.-]+)\s+/) {
+    die "duplicate stroke '$1'" if exists $strokes{$1};
     $strokes{$1} = [map {hex} split /\s+/, $'];
+    print "# $_";
+  } elsif (m/^\.macrostroke\s+([\w.-]+)\s+/) {
+    die "duplicate stroke '$1'" if exists $strokes{$1};
+    $strokes{$1} = or_vectors map {
+      die "unknown stroke '$_'" unless exists $strokes{$_};
+      $strokes{$_};
+    } split /\s+/, $';
     print "# $_";
   } elsif (m/^\.compose\s+([\dabcdefABCDEF]+)\s*:\s*/) {
     my $code = hex $1;
