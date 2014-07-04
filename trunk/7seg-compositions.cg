@@ -1,0 +1,80 @@
+# Structure of 7-segment glyphs.  See 7seg.cs for the charset.
+
+# ASCII subset
+.compose 22: b f
+.compose 27: f
+.compose 2D: g
+.compose 2F: b e g
+.compose 30: a b c d e f
+.compose 31: b c
+.compose 32: a b d e g
+.compose 33: a b c d g
+.compose 34: b c f g
+.compose 35: a c d f g
+.compose 36: a c d e f g
+.compose 37: a b c f
+.compose 38: a b c d e f g
+.compose 39: a b c d f g
+.compose 3D: d g
+.compose 3F: a b e g
+.compose 41: a b c e f g
+.compose 43: a d e f
+.compose 45: a d e f g
+.compose 46: a e f g
+.compose 66: a e f g
+.compose 47: a c d e f
+.compose 48: b c e f g
+.compose 49: b c
+.compose 4A: b c d e
+.compose 4C: d e f
+.compose 4E: a b c e f
+.compose 4F: a b c d e f
+.compose 50: a b e f g
+.compose 51: a b d f g
+.compose 52: a e f
+.compose 53: a c d f g
+.compose 55: b c d e f
+.compose 59: b c d f g
+.compose 5B: a d e f
+.compose 5C: c f g
+.compose 5D: a b c d
+.compose 5E: a b f
+.compose 5F: d
+.compose 60: b
+.compose 61: a b c d e g
+.compose 62: c d e f g
+.compose 63: d e g
+.compose 64: b c d e g
+.compose 65: a b d e f g
+.compose 68: c e f g
+.compose 69: e
+.compose 6A: c d
+.compose 6E: c e g
+.compose 71: a b c f g
+.compose 72: e g
+.compose 74: d e f g
+.compose 75: c d e
+.compose 7E: a
+
+# Some additional Latin-1 characters
+.compose B0: a b f g
+.compose F1: a c e g
+.compose F5: a c d e g
+
+# Some additional Unicode characters
+.compose 80: a b c
+.compose 81: b c g
+.compose 82: b c d
+.compose 83: a c d e
+.compose 85: a d g
+.compose 86: b c d e f g
+.compose 87: a c e
+.compose 88: b d f
+.compose 89: a c f
+.compose 8A: a b e
+.compose 8B: c d f
+.compose 8C: b d e
+.compose EC: a b c e g
+.compose 8D: a c d f
+.compose 8E: a b d e
+.compose ED: b e f g

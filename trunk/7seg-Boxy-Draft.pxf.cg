@@ -1,0 +1,22 @@
+# 7-segment display emulation on bitmaps.  5x7 edition with 6:5 aspect ratio.
+
+charset 7seg.cs
+
+aspect-ratio 6:5
+circular-dots
+baseline 5
+
+# Special case: period drawn outside the 7-segment framework
+2E 000 060 060 000 000 000
+
+.stroke a 800 800 800 800 800 000
+.stroke b 000 000 000 000 F00 000
+.stroke c 000 000 000 000 1E0 000
+.stroke d 020 020 020 020 020 000
+.stroke e 1E0 000 000 000 000 000
+.stroke f F00 000 000 000 000 000
+.stroke g 100 100 100 100 100 000
+
+20 000 000 000 000 000 000
+
+.include 7seg-compositions.cg

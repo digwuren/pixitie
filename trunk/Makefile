@@ -34,6 +34,10 @@ RESOURCES = ascii.cs \
   DMP3000-NLQ.pxf DMP3000-NLQ-Italic.pxf DMP3000-NLQ-Extra.pxf DMP3000-Draft-Extra.pxf dmp3000-extra.cs \
   DMP3160-NLQ.pxf DMP3160-NLQ-Italic.pxf \
   DMP3160-Draft.pxf DMP3160-Draft-Italic.pxf \
+  7seg.cs \
+  7seg-Boxy-Draft.pxf \
+  7seg-Boxy-Narrowed-Draft.pxf \
+  7seg-Mini-Draft.pxf \
   abridged-unicode.txt
 
 pixitie: pixitie-code.rb $(RESOURCES)
@@ -477,3 +481,11 @@ Bradford-Extra-T.brad: EXTRAFON.LBR
 
 %-Monospaced.pxf: %.brad bradford2pxf.rb
 	./bradford2pxf.rb ${options} < $< > $@
+
+# General Glyph Compositor invocation rule
+%.pxf: %.pxf.cg compose-glyphs.pl
+	./compose-glyphs.pl $< > $@
+
+# Speciall dependencies for the Glyph Compositor sources
+7seg-Boxy-Draft.pxf 7seg-Boxy-Narrowed-Draft.pxf \
+    7seg-Mini-Draft.pxf: 7seg-compositions.cg

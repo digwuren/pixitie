@@ -1,0 +1,24 @@
+# 7-segment display emulation on bitmaps.  4x7 edition centered in standard
+# Epson FX-80 charcells.
+
+charset 7seg.cs
+
+aspect-ratio 6:5
+horizontal-compression 0.5
+circular-dots
+baseline 5
+
+# Special case: period drawn outside the 7-segment framework
+2E 000 000 060 000 060 000 000 000 000 000 000 000
+
+.stroke a 000 800 000 800 000 800 000 800 000 000 000 000
+.stroke b 000 000 000 000 000 000 000 F00 000 000 000 000
+.stroke c 000 000 000 000 000 000 000 1E0 000 000 000 000
+.stroke d 000 020 000 020 000 020 000 020 000 000 000 000
+.stroke e 000 1E0 000 000 000 000 000 000 000 000 000 000
+.stroke f 000 F00 000 000 000 000 000 000 000 000 000 000
+.stroke g 000 100 000 100 000 100 000 100 000 000 000 000
+
+20 000 000 000 000 000 000 000 000 000 000 000 000
+
+.include 7seg-compositions.cg
