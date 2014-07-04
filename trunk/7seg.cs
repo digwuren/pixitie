@@ -11,12 +11,12 @@ code 45 .. 4A = U+0045 .. U+004A
 code 4C = U+004C
 code 4E .. 53 = U+004E .. U+0053
 code 55 = U+0055
-code 59 = U+0059
-code 5B .. 66 = U+005B .. U+0066
+code 5B .. 65 = U+005B .. U+0065
 code 68 .. 6A = U+0068 .. U+006A
 code 6E = U+006E
 code 71 .. 72 = U+0071 .. U+0072
 code 74 .. 75 = U+0074 .. U+0075
+code 79 = U+0079
 code 7E = U+007E
 
 # Some additional characters from Latin-1

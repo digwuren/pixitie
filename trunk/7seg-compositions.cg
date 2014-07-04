@@ -21,7 +21,6 @@
 .compose 43: a d e f
 .compose 45: a d e f g
 .compose 46: a e f g
-.compose 66: a e f g
 .compose 47: a c d e f
 .compose 48: b c e f g
 .compose 49: b c
@@ -34,7 +33,6 @@
 .compose 52: a e f
 .compose 53: a c d f g
 .compose 55: b c d e f
-.compose 59: b c d f g
 .compose 5B: a d e f
 .compose 5C: c f g
 .compose 5D: a b c d
@@ -54,6 +52,7 @@
 .compose 72: e g
 .compose 74: d e f g
 .compose 75: c d e
+.compose 79: b c d f g
 .compose 7E: a
 
 # Some additional Latin-1 characters
