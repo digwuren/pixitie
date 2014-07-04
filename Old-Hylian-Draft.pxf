@@ -1,4 +1,10 @@
-# A font for the Old Hylian script.  See <http://www.omniglot.com/conscripts/hylian.htm>.
+# A font for the Old Hylian script.  See
+# <http://www.omniglot.com/conscripts/hylian.htm>.
+
+# This version is laid out for fitting in the standard FX-80 10cpi charcells in
+# draft mode.  Because of the particular blockiness of the Old Hylian script,
+# the actual data is presented as a bitmap of distinct pixels, without actually
+# using the FX-80 horizontal compression feature.
 
 charset old-hylian.cs
 
