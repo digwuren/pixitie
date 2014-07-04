@@ -35,8 +35,8 @@ RESOURCES = ascii.cs \
   DMP3160-NLQ.pxf DMP3160-NLQ-Italic.pxf \
   DMP3160-Draft.pxf DMP3160-Draft-Italic.pxf \
   7seg.cs \
-  7seg-Boxy-Draft.pxf \
-  7seg-Boxy-Narrowed-Draft.pxf \
+  7seg-Boxy-Draft.pxf 7seg-Boxy-Narrowed-Draft.pxf \
+  7seg-Boxy-NLQ.pxf 7seg-Boxy-NLQ-Rounded.pxf 7seg-Boxy-Narrowed-NLQ.pxf 7seg-Boxy-Narrowed-NLQ-Rounded.pxf \
   7seg-Mini-Draft.pxf \
   abridged-unicode.txt \
   old-hylian.cs \
@@ -492,6 +492,7 @@ Bradford-Extra-T.brad: EXTRAFON.LBR
 
 # Special dependencies for the Glyph Compositor sources
 7seg-Boxy-Draft.pxf 7seg-Boxy-Narrowed-Draft.pxf \
+    7seg-Boxy-NLQ.pxf 7seg-Boxy-NLQ-Rounded.pxf 7seg-Boxy-Narrowed-NLQ.pxf 7seg-Boxy-Narrowed-NLQ-Rounded.pxf \
     7seg-Mini-Draft.pxf: 7seg-compositions.cg
 
 # Braille font generation rule
