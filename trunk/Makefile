@@ -40,7 +40,9 @@ RESOURCES = ascii.cs \
   7seg-Mini-Draft.pxf \
   abridged-unicode.txt \
   old-hylian.cs \
-  Old-Hylian-Draft.pxf Old-Hylian-NLQ.pxf Old-Hylian-NLQ-Elite.pxf Old-Hylian-NLQ-Dense.pxf
+  Old-Hylian-Draft.pxf Old-Hylian-NLQ.pxf Old-Hylian-NLQ-Elite.pxf Old-Hylian-NLQ-Dense.pxf \
+  braille.cs \
+  Braille-Draft.pxf
 
 pixitie: pixitie-code.rb $(RESOURCES)
 	( \
@@ -491,3 +493,7 @@ Bradford-Extra-T.brad: EXTRAFON.LBR
 # Special dependencies for the Glyph Compositor sources
 7seg-Boxy-Draft.pxf 7seg-Boxy-Narrowed-Draft.pxf \
     7seg-Mini-Draft.pxf: 7seg-compositions.cg
+
+# Braille font generation rule
+Braille-Draft.pxf.cg: generate-Braille-Draft.pxf.cg.pl
+	./generate-Braille-Draft.pxf.cg.pl > $@
