@@ -10,9 +10,6 @@
 charset old-hylian.cs
 
 aspect-ratio 6:5
-charset old-hylian.cs
-
-aspect-ratio 6:5
 horizontal-compression 1/2
 vertical-compression 1/2
 circular-dots
