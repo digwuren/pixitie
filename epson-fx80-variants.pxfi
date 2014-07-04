@@ -2,5 +2,6 @@ variant-bit Underscored /columns |8 : &~8
 variant-bit Wide /or-pixels-rightwards, /stretch-wide
 variant-bit Bold /or-pixels-rightwards
 variant-bit Condensed horizontal-compression 0.5, /pad 1
+variant-bit Square horizontal-compression 5/6
 
 #variant-bit-exclusion Elite, Condensed
