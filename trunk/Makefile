@@ -42,7 +42,9 @@ RESOURCES = ascii.cs \
   old-hylian.cs \
   Old-Hylian-Draft.pxf Old-Hylian-NLQ.pxf Old-Hylian-NLQ-Elite.pxf Old-Hylian-NLQ-Dense.pxf \
   braille.cs \
-  Braille-Draft.pxf
+  Braille-Draft.pxf \
+  taiogeuna.cs \
+  Taiogeuna-Draft.pxf Taiogeuna-NLQ.pxf
 
 pixitie: pixitie-code.rb $(RESOURCES)
 	( \
