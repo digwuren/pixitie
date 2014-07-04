@@ -38,7 +38,9 @@ RESOURCES = ascii.cs \
   7seg-Boxy-Draft.pxf \
   7seg-Boxy-Narrowed-Draft.pxf \
   7seg-Mini-Draft.pxf \
-  abridged-unicode.txt
+  abridged-unicode.txt \
+  old-hylian.cs \
+  Old-Hylian-Draft.pxf Old-Hylian-NLQ.pxf Old-Hylian-NLQ-Elite.pxf Old-Hylian-NLQ-Dense.pxf
 
 pixitie: pixitie-code.rb $(RESOURCES)
 	( \
@@ -486,6 +488,6 @@ Bradford-Extra-T.brad: EXTRAFON.LBR
 %.pxf: %.pxf.cg compose-glyphs.pl
 	./compose-glyphs.pl $< > $@
 
-# Speciall dependencies for the Glyph Compositor sources
+# Special dependencies for the Glyph Compositor sources
 7seg-Boxy-Draft.pxf 7seg-Boxy-Narrowed-Draft.pxf \
     7seg-Mini-Draft.pxf: 7seg-compositions.cg
