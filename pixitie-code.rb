@@ -264,7 +264,7 @@ EOU
     # surrounding parentheses.
     def ps_escape
       result = ''
-      each_byte do |b|
+      unpack 'U*' do |b|
         if (0x20 .. 0x7E).include? b then
           result << '\\' if "\\()".include? b.chr
           result << b.chr
@@ -2329,7 +2329,7 @@ EOU
       end
       if (0x00 .. 0xFF).include? code then
         @curstr ||= ''
-        @curstr << code
+        @curstr << [code].pack('U*')
       else
         _flush_current_string
         char_name = @curstate.font_program.get_char_name(code)
