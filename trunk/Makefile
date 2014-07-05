@@ -509,6 +509,11 @@ Default8x16.pxf Default8x16.cs: inputs/consolefonts/default8x16.psf.gz psf2pxf.r
         -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
         > Default8x16.pxf
 
+Default8x9.pxf Default8x9.cs: inputs/consolefonts/default8x9.psf.gz psf2pxf.rb
+	./psf2pxf.rb $< --output-charset Default8x9.cs \
+        -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
+        > Default8x9.pxf
+
 #### Download rules
 
 inputs/glyphlist.txt:
@@ -545,6 +550,7 @@ OVERVIEWED_FONTS = \
     \
     ZXSpectrum-Chargen \
     \
+    Default8x9 \
     Default8x16 \
     \
     Gohufont-11 Gohufont-11-Bold Gohufont-14 Gohufont-14-Bold \
@@ -564,7 +570,7 @@ OVERVIEWED_FONTS = \
     7seg-Mini-Draft
 
 .PHONY: overviews
-overviews: $(foreach font, $(OVERVIEWED_FONTS), overviews/$(font).pdf)
+overviews: $(foreach font, $(OVERVIEWED_FONTS), overviews/$(font).pdf overviews/$(font).ps)
 
 ## Let the PostScript overviews depend ond all the charsets needed by their
 ## respective PXF files
