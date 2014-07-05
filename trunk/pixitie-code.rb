@@ -2759,6 +2759,22 @@ EOU
       end
       $ts.newline
 
+      # Then, a pangram, if the font can handle it.
+      successful_pangram = false
+      [
+        'the quick brown fox jumped over the lazy dog',
+        'THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG',
+        '0123456789',
+      ].each do |pangram|
+        next unless pangram.unpack('U*').all?{ |uc|
+            object_font.charset.encode(uc)}
+        $ts.switch_font object_font.name, $font_size
+        $ts.typeset_utf8 pangram
+        $ts.newline
+        successful_pangram = true
+      end
+      $ts.newline if successful_pangram
+
       # Is this font based on ASCII?
       pure_ascii_characters = []
       ascii_charset = Charset::load('ascii.cs')
