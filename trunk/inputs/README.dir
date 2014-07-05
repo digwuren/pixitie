@@ -2,3 +2,10 @@ This directory holds input data for Pixitie fonts from miscellaneous sources:
 
 - monobook-font-0.22 has a Google Code project page at
   <https://code.google.com/p/monobook-font/>.
+
+- BRFONTS.LBR is a CP/M archive ('library') file containing extra fonts for the
+  Bradford utility and comes from
+  <http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/BRFONTS.LBR>.
+
+- BRAD-GRK.LBR contains more extra fonts for the Bradford utility and comes from
+  <wget 'http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/BRAD-GRK.LBR>.

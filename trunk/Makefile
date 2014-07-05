@@ -385,8 +385,8 @@ DMP3160-Draft-Italic.pxf: DMP3160_Charset.png parse-image.rb
 
 # Modified Bradford fonts by Stan Kazmiruk
 
-BRFONTS.LBR:
-	wget 'http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/BRFONTS.LBR'
+inputs/BRFONTS.LBR:
+	wget 'http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/BRFONTS.LBR' -O $@
 
 Bradford-Kazmiruk-T.brad: origname = fontt.bin
 Bradford-Kazmiruk-O.brad: origname = fonto.bin
@@ -396,25 +396,25 @@ Bradford-Kazmiruk-T-Monospaced.pxf: options := -b2
 Bradford-Kazmiruk-O-Monospaced.pxf: options := -b0
 Bradford-Kazmiruk-M-Monospaced.pxf: options := -b2
 
-Bradford-Kazmiruk-T.brad: BRFONTS.LBR
+Bradford-Kazmiruk-T.brad: inputs/BRFONTS.LBR
 	lar p $< ${origname} > $@
 
-Bradford-Kazmiruk-O.brad: BRFONTS.LBR
+Bradford-Kazmiruk-O.brad: inputs/BRFONTS.LBR
 	lar p $< ${origname} > $@
 
-Bradford-Kazmiruk-M.brad: BRFONTS.LBR
+Bradford-Kazmiruk-M.brad: inputs/BRFONTS.LBR
 	lar p $< ${origname} > $@
 
 # A Greek Bradford font by Calvin T. Richter
 
-BRAD-GRK.LBR:
-	wget 'http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/BRAD-GRK.LBR'
+inputs/BRAD-GRK.LBR:
+	wget 'http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/BRAD-GRK.LBR' -O $@
 
 Bradford-Greek.brad: origname = font@.bin
 
 Bradford-Greek-Monospaced.pxf: options := -b2 -cBradford-Greek-Monospaced.cs
 
-Bradford-Greek.brad: BRAD-GRK.LBR
+Bradford-Greek.brad: inputs/BRAD-GRK.LBR
 	lar p $< ${origname} > $@
 
 # Bradford extra fonts, by Aaron Contorer and Fredric N. Loring
