@@ -558,19 +558,16 @@ OLD_HYLIAN_FONTS = Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hyli
 .PHONY: overviews
 overviews: $(foreach font, $(OVERVIEWED_FONTS), overviews/$(font).pdf)
 
-$(foreach font, DMP2000 DMP3000-NLQ DMP3000-NLQ-Italic \
-    DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic, \
-    overviews/$(font).ps): epson-fx80.cs
-$(foreach font, DMP3000-NLQ-Extra DMP3000-Draft-Extra, overviews/$(font).ps): dmp3000-extra.cs
-overviews/NLQ401.ps: NLQ401.cs
-overviews/NLQ401-Draft.ps: NLQ401-Draft.cs
-overviews/NLQ401-Draft-Extra.ps: NLQ401-Draft-Extra.cs
+## Let the PostScript overviews depend ond all the charsets needed by their
+## respective PXF files
 
-$(foreach font, $(BRADFORD_ORIGINAL_FONTS) $(BRADFORD_EXTRA_FONTS), \
-    overviews/$(font).ps): bradford.cs ascii.cs
-$(foreach font, $(MONOBOOK_FONTS), overviews/$(font).ps): monobook.cs
-$(foreach font, $(7SEG_FONTS), overviews/$(font).ps): 7seg.cs
-$(foreach font, $(OLD_HYLIAN_FONTS), overviews/$(font).ps): old-hylian.cs
+include overviews/charset.dep
+
+deps:
+	overviews/charset.dep.sh
+
+# cancel a rather bizarre builtin rule of GNU Make
+%: %.sh
 
 ## The generation templates
 
