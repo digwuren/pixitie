@@ -5,6 +5,7 @@ RESOURCES = ascii.cs \
   bradford.cs \
   Bradford-Greek-Monospaced.cs \
   zx-spectrum.cs ZXSpectrum-Chargen.8x8.hex \
+  Atari-Graphic.cs \
   dmp3000-extra.cs \
   NLQ401.cs NLQ401-Draft.cs NLQ401-Draft-Extra.cs \
   7seg.cs 14seg.cs \
@@ -521,6 +522,9 @@ Lat1-08.pxf Lat1-08.cs: inputs/consolefonts/lat1-08.psf.gz psf2pxf.rb
         -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
         > Lat1-08.pxf
 
+# FIXME: the Unicode mapping data from Goha* and GohaClassic* PSFs is full of
+# crap and needs to be fixed.
+
 Goha-12.pxf Goha-12.cs: inputs/consolefonts/Goha-12.psf.gz psf2pxf.rb
 	./psf2pxf.rb $< --output-charset Goha-12.cs \
         -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
@@ -586,6 +590,7 @@ OVERVIEWED_FONTS = \
     NLQ401 NLQ401-Draft NLQ401-Draft-Extra \
     \
     ZXSpectrum-Chargen \
+    Atari-Graphic \
     \
     Default8x9 \
     Default8x16 \
