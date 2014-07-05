@@ -196,10 +196,10 @@ NLQ401-Draft-Extra.pxf: NLQ401_Charset.png picture2pxf.rb
           $< > $@
 
 # DMP2000 font
-DMP2000_Charset.png:
-	wget 'http://www.cpcwiki.eu/imgs/f/f3/DMP2000_Charset.png'
+inputs/DMP2000_Charset.png:
+	wget 'http://www.cpcwiki.eu/imgs/f/f3/DMP2000_Charset.png' -O $@
 
-DMP2000.pxf: DMP2000_Charset.png picture2pxf.rb
+DMP2000.pxf: inputs/DMP2000_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,17 \
           --range=0x00..0x7F \
@@ -220,10 +220,10 @@ DMP2000.pxf: DMP2000_Charset.png picture2pxf.rb
           $< > $@
 
 # DMP3000 fonts
-DMP3000_Charset.png:
-	wget 'http://www.cpcwiki.eu/imgs/8/80/DMP3000_Charset.png'
+inputs/DMP3000_Charset.png:
+	wget 'http://www.cpcwiki.eu/imgs/8/80/DMP3000_Charset.png' -O $@
 
-DMP3000-NLQ.pxf: DMP3000_Charset.png picture2pxf.rb
+DMP3000-NLQ.pxf: inputs/DMP3000_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,17 \
           --range=0x00..0x7F \
@@ -243,7 +243,7 @@ DMP3000-NLQ.pxf: DMP3000_Charset.png picture2pxf.rb
           -h 'variant-bit Underscored /columns |4' \
           $< > $@
 
-DMP3000-NLQ-Italic.pxf: DMP3000_Charset.png picture2pxf.rb
+DMP3000-NLQ-Italic.pxf: inputs/DMP3000_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,537 \
           --range=0x00..0x7F \
@@ -263,7 +263,7 @@ DMP3000-NLQ-Italic.pxf: DMP3000_Charset.png picture2pxf.rb
           -h 'variant-bit Underscored /columns |4' \
           $< > $@
 
-DMP3000-NLQ-Extra.pxf: DMP3000_Charset.png picture2pxf.rb
+DMP3000-NLQ-Extra.pxf: inputs/DMP3000_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,1057 \
           --range=0x00..0x4B \
@@ -281,7 +281,7 @@ DMP3000-NLQ-Extra.pxf: DMP3000_Charset.png picture2pxf.rb
           -h 'baseline 7' \
           $< > $@
 
-DMP3000-Draft-Extra.pxf: DMP3000_Charset.png picture2pxf.rb
+DMP3000-Draft-Extra.pxf: inputs/DMP3000_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,1442 \
           --range=0x00..0x6C \
