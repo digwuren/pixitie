@@ -1979,9 +1979,12 @@ EOU
       return
     end
 
-    # PXF fonts do not have unnumbered named characters.
     def get_char_name code
-      return nil
+      if has_char? code then
+        return charset.ps_charname(code)
+      else
+        return nil
+      end
     end
   end
 
