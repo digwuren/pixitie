@@ -540,12 +540,32 @@ Monobook-28-Bold.pxf: inputs/monobook-font-0.22/mb28b.bdf
 
 # console-fonts/ extraction rules
 
-Default8x16.pxf Default8x16.cs: inputs/consolefonts/default8x16.psf.gz psf2pxf.rb
+Default8x16.pxf Default8x16.cs: inputs/consolefonts/default8x16.psf.gz
 	./psf2pxf.rb $< --output-charset Default8x16.cs \
         -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
         > Default8x16.pxf
 
-#### Downloading rules
+#### Download rules
 
 inputs/glyphlist.txt:
 	wget 'http://partners.adobe.com/public/developer/en/opentype/glyphlist.txt' -O $@
+
+#### Overview generation rules
+
+overviews: overviews/Old-Hylian-Draft.pdf
+.PHONY: overviews
+
+overviews/Old-Hylian-Draft.ps: Old-Hylian-Draft.pxf old-hylian.cs
+        # We'll pass -R. to Pixitie even though it already has the font.  This
+        # is to ensure that it uses the external, not the embedded version of
+        # relevant resources.  (Recall that external resources take precedence
+        # over internal ones.)
+	./pixitie -R. --showcase Old-Hylian-Draft > $@
+
+overviews/Old-Hylian-Draft.pdf: overviews/Old-Hylian-Draft.ps
+        # Apple's pstopdf is often, but not always, able to perform the
+        # conversion.  It particularly seems to have trouble with fonts larger
+        # than 255 (sic) glyphs.
+        #
+        # We'll rely on GhostScript's ps2pdf, which is more reliable.
+	ps2pdf $< $@
