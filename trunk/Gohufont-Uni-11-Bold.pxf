@@ -2,7 +2,7 @@
 # <http://font.gohu.org/gohufont-bdf-2.0.tar.gz>.  By Hugo Chargois; see
 # <http://font.gohu.org>
 
-charset Gohufont-Uni.cs
+charset Gohufont-Uni-11.cs
 
 baseline 3
 00 528 000 408 000 528 000
