@@ -49,6 +49,7 @@ RESOURCES = ascii.cs \
   Gohufont-11.pxf Gohufont-11-Bold.pxf Gohufont-14.pxf Gohufont-14-Bold.pxf \
   Gohufont-Uni-11.cs Gohufont-Uni-14.cs \
   Gohufont-Uni-11.pxf Gohufont-Uni-11-Bold.pxf Gohufont-Uni-14.pxf Gohufont-Uni-14-Bold.pxf \
+  Default8x16.cs Default8x16.pxf \
   glyphlist.txt
 
 pixitie: pixitie-code.rb $(RESOURCES)
