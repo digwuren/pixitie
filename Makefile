@@ -47,7 +47,7 @@ RESOURCES = ascii.cs \
   Taiogeuna-Draft.pxf Taiogeuna-NLQ.pxf \
   latin1.cs \
   Gohufont-11.pxf Gohufont-11-Bold.pxf Gohufont-14.pxf Gohufont-14-Bold.pxf \
-  Gohufont-Uni.cs \
+  Gohufont-Uni-11.cs Gohufont-Uni-14.cs \
   Gohufont-Uni-11.pxf Gohufont-Uni-11-Bold.pxf Gohufont-Uni-14.pxf Gohufont-Uni-14-Bold.pxf \
   glyphlist.txt
 
