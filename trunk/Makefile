@@ -27,13 +27,9 @@ RESOURCES = ascii.cs \
   Bradford-Extra-S-Monospaced.pxf \
   Bradford-Extra-T-Monospaced.pxf \
   ZXSpectrum-Chargen.pxf zx-spectrum.cs ZXSpectrum-Chargen.8x8.hex \
-  NLQ401.cs NLQ401.pxf \
-  NLQ401-Draft.cs NLQ401-Draft.pxf \
-  NLQ401-Draft-Extra.cs NLQ401-Draft-Extra.pxf \
-  DMP2000.pxf \
-  DMP3000-NLQ.pxf DMP3000-NLQ-Italic.pxf DMP3000-NLQ-Extra.pxf DMP3000-Draft-Extra.pxf dmp3000-extra.cs \
-  DMP3160-NLQ.pxf DMP3160-NLQ-Italic.pxf \
-  DMP3160-Draft.pxf DMP3160-Draft-Italic.pxf \
+  dmp3000-extra.cs \
+  NLQ401.cs NLQ401-Draft.cs NLQ401-Draft-Extra.cs \
+  $(foreach font, $(AMSTRAD_FONTS), $(font).pxf) \
   7seg.cs \
   7seg-Boxy-Draft.pxf 7seg-Boxy-Narrowed-Draft.pxf \
   7seg-Boxy-NLQ.pxf 7seg-Boxy-NLQ-Rounded.pxf 7seg-Boxy-Narrowed-NLQ.pxf 7seg-Boxy-Narrowed-NLQ-Rounded.pxf \
@@ -51,8 +47,7 @@ RESOURCES = ascii.cs \
   Gohufont-Uni-11.pxf Gohufont-Uni-11-Bold.pxf Gohufont-Uni-14.pxf Gohufont-Uni-14-Bold.pxf \
   Default8x16.cs Default8x16.pxf \
   monobook.cs \
-  Monobook-12.pxf Monobook-16.pxf Monobook-20.pxf Monobook-24.pxf Monobook-28.pxf \
-  Monobook-16-Bold.pxf Monobook-20-Bold.pxf Monobook-24-Bold.pxf Monobook-28-Bold.pxf \
+  $(foreach font, $(MONOBOOK_FONTS), $(font).pxf) \
   inputs/glyphlist.txt
 
 pixitie: pixitie-code.rb $(RESOURCES)
@@ -552,6 +547,8 @@ inputs/glyphlist.txt:
 
 #### Overview generation rules
 
+OVERVIEWED_FONTS = $(AMSTRAD_FONTS) $(MONOBOOK_FONTS) $(7SEG_FONTS) $(OLD_HYLIAN_FONTS)
+
 AMSTRAD_FONTS = DMP2000 \
                 DMP3000-NLQ DMP3000-NLQ-Italic DMP3000-NLQ-Extra DMP3000-Draft-Extra \
                 DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic \
@@ -564,12 +561,7 @@ MONOBOOK_FONTS = Monobook-12 Monobook-16 Monobook-20 Monobook-24 Monobook-28 \
 OLD_HYLIAN_FONTS = Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hylian-NLQ-Dense
 
 .PHONY: overviews
-overviews: $(foreach font, \
-    $(AMSTRAD_FONTS) \
-    $(MONOBOOK_FONTS) \
-    $(7SEG_FONTS) \
-    $(OLD_HYLIAN_FONTS), \
-    overviews/$(font).pdf)
+overviews: $(foreach font, $(OVERVIEWED_FONTS), overviews/$(font).pdf)
 
 $(foreach font, DMP2000 DMP3000-NLQ DMP3000-NLQ-Italic \
     DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic, \
