@@ -50,6 +50,12 @@ overviews/Default8x16.ps: Default8x16.cs
 overviews/Default8x9.ps: Default8x9.cs
 overviews/EpsonFX80-Italic.ps: epson-fx80.cs ascii.cs
 overviews/EpsonFX80.ps: epson-fx80.cs ascii.cs
+overviews/Goha-12.ps: Goha-12.cs
+overviews/Goha-14.ps: Goha-14.cs
+overviews/Goha-16.ps: Goha-16.cs
+overviews/GohaClassic-12.ps: GohaClassic-12.cs
+overviews/GohaClassic-14.ps: GohaClassic-14.cs
+overviews/GohaClassic-16.ps: GohaClassic-16.cs
 overviews/Gohufont-11-Bold.ps: latin1.cs ascii.cs
 overviews/Gohufont-11.ps: latin1.cs ascii.cs
 overviews/Gohufont-14-Bold.ps: latin1.cs ascii.cs

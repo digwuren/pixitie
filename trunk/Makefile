@@ -15,6 +15,8 @@ RESOURCES = ascii.cs \
   latin1.cs \
   Gohufont-Uni-11.cs Gohufont-Uni-14.cs \
   Default8x9.cs Default8x16.cs Lat1-08.cs \
+  Goha-12.cs Goha-14.cs Goha-16.cs \
+  GohaClassic-12.cs GohaClassic-14.cs GohaClassic-16.cs \
   monobook.cs \
   $(foreach font, $(OVERVIEWED_FONTS), $(font).pxf) \
   inputs/glyphlist.txt
@@ -519,6 +521,36 @@ Lat1-08.pxf Lat1-08.cs: inputs/consolefonts/lat1-08.psf.gz psf2pxf.rb
         -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
         > Lat1-08.pxf
 
+Goha-12.pxf Goha-12.cs: inputs/consolefonts/Goha-12.psf.gz psf2pxf.rb
+	./psf2pxf.rb $< --output-charset Goha-12.cs \
+        -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
+        > Goha-12.pxf
+
+Goha-14.pxf Goha-14.cs: inputs/consolefonts/Goha-14.psf.gz psf2pxf.rb
+	./psf2pxf.rb $< --output-charset Goha-14.cs \
+        -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
+        > Goha-14.pxf
+
+Goha-16.pxf Goha-16.cs: inputs/consolefonts/Goha-16.psf.gz psf2pxf.rb
+	./psf2pxf.rb $< --output-charset Goha-16.cs \
+        -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
+        > Goha-16.pxf
+
+GohaClassic-12.pxf GohaClassic-12.cs: inputs/consolefonts/GohaClassic-12.psf.gz psf2pxf.rb
+	./psf2pxf.rb $< --output-charset GohaClassic-12.cs \
+        -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
+        > GohaClassic-12.pxf
+
+GohaClassic-14.pxf GohaClassic-14.cs: inputs/consolefonts/GohaClassic-14.psf.gz psf2pxf.rb
+	./psf2pxf.rb $< --output-charset GohaClassic-14.cs \
+        -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
+        > GohaClassic-14.pxf
+
+GohaClassic-16.pxf GohaClassic-16.cs: inputs/consolefonts/GohaClassic-16.psf.gz psf2pxf.rb
+	./psf2pxf.rb $< --output-charset GohaClassic-16.cs \
+        -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
+        > GohaClassic-16.pxf
+
 #### Download rules
 
 inputs/glyphlist.txt:
@@ -558,6 +590,8 @@ OVERVIEWED_FONTS = \
     Default8x9 \
     Default8x16 \
     Lat1-08 \
+    Goha-12 Goha-14 Goha-16 \
+    GohaClassic-12 GohaClassic-14 GohaClassic-16 \
     \
     Gohufont-11 Gohufont-11-Bold Gohufont-14 Gohufont-14-Bold \
     Gohufont-Uni-11 Gohufont-Uni-11-Bold Gohufont-Uni-14 Gohufont-Uni-14-Bold \
