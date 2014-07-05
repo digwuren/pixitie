@@ -4,10 +4,7 @@ RESOURCES = ascii.cs \
   epson-fx80.cs epson-fx80-variants.pxfi EpsonFX80.pxf \
   EpsonFX80-Italic.pxf \
   bradford.cs \
-  Bradford-Kazmiruk-T-Monospaced.pxf \
-  Bradford-Kazmiruk-O-Monospaced.pxf \
-  Bradford-Kazmiruk-M-Monospaced.pxf \
-  Bradford-Greek-Monospaced.pxf Bradford-Greek-Monospaced.cs \
+  Bradford-Greek-Monospaced.cs \
   ZXSpectrum-Chargen.pxf zx-spectrum.cs ZXSpectrum-Chargen.8x8.hex \
   dmp3000-extra.cs \
   NLQ401.cs NLQ401-Draft.cs NLQ401-Draft-Extra.cs \
@@ -537,6 +534,12 @@ OVERVIEWED_FONTS = \
     Bradford-Extra-M-Monospaced Bradford-Extra-N-Monospaced \
     Bradford-Extra-O-Monospaced Bradford-Extra-P-Monospaced \
     Bradford-Extra-S-Monospaced Bradford-Extra-T-Monospaced \
+    \
+    Bradford-Greek-Monospaced \
+    \
+    Bradford-Kazmiruk-T-Monospaced \
+    Bradford-Kazmiruk-O-Monospaced \
+    Bradford-Kazmiruk-M-Monospaced \
     \
     DMP2000 \
     DMP3000-NLQ DMP3000-NLQ-Italic DMP3000-NLQ-Extra DMP3000-Draft-Extra \
