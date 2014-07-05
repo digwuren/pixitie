@@ -44,7 +44,9 @@ RESOURCES = ascii.cs \
   braille.cs \
   Braille-Draft.pxf \
   taiogeuna.cs \
-  Taiogeuna-Draft.pxf Taiogeuna-NLQ.pxf
+  Taiogeuna-Draft.pxf Taiogeuna-NLQ.pxf \
+  latin1.cs \
+  Gohufont-11.pxf Gohufont-11-Bold.pxf Gohufont-14.pxf Gohufont-14-Bold.pxf
 
 pixitie: pixitie-code.rb $(RESOURCES)
 	( \
