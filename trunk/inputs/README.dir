@@ -27,3 +27,8 @@ This directory holds input data for Pixitie fonts from miscellaneous sources:
   printer, downloaded from the CPC Wiki at
   <http://www.cpcwiki.eu/imgs/8/80/inputs/DMP3000_Charset.png>; see
   <http://www.cpcwiki.eu/index.php/Amstrad/Schneider_Printer_Character_Sets>.
+
+- DMP3160_Charset.png is an image of four fonts (NLQ/Draft, Roman/Italic) of
+  the Amstrad DMP3160 printer, downloaded from the CPC Wiki at
+  <http://www.cpcwiki.eu/imgs/a/a6/DMP3160_Charset.png>; see
+  <http://www.cpcwiki.eu/index.php/Amstrad/Schneider_Printer_Character_Sets>.
