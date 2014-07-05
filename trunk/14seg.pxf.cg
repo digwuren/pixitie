@@ -1,0 +1,157 @@
+aspect-ratio 6:5
+horizontal-compression 1/2
+vertical-compression 1/2
+circular-dots
+baseline 5
+
+charset 14seg.cs
+
+# Special case: period drawn outside the 14-segment framework
+# (borrowed from DMP3000-NLQ.pxf / DMP3160-NLQ.pxf)
+2E 00000 00000 00080 001C0 00080 00000 00000 00000 00000 00000 00000 00000
+
+.stroke north 80000 80000 80000 80000 80000 80000 80000 80000 80000 00000 00000 00000
+.stroke east.top 00000 00000 00000 00000 00000 00000 00000 00000 FE000 00000 00000 00000
+.stroke east.bottom 00000 00000 00000 00000 00000 00000 00000 00000 03F80 00000 00000 00000
+.stroke south 00080 00080 00080 00080 00080 00080 00080 00080 00080 00000 00000 00000
+.stroke west.bottom 03F80 00000 00000 00000 00000 00000 00000 00000 00000 00000 00000 00000
+.stroke west.top FE000 00000 00000 00000 00000 00000 00000 00000 00000 00000 00000 00000
+.stroke mid-west 02000 02000 02000 02000 02000 00000 00000 00000 00000 00000 00000 00000
+.stroke mid-northwest C0000 20000 18000 04000 02000 00000 00000 00000 00000 00000 00000 00000
+.stroke mid-north 00000 00000 00000 00000 FE000 00000 00000 00000 00000 00000 00000 00000
+.stroke mid-northeast 00000 00000 00000 00000 02000 04000 18000 20000 C0000 00000 00000 00000
+.stroke mid-east 00000 00000 00000 00000 02000 02000 02000 02000 02000 00000 00000 00000
+.stroke mid-southwest 00180 00200 00C00 01000 02000 00000 00000 00000 00000 00000 00000 00000
+.stroke mid-south 00000 00000 00000 00000 03F80 00000 00000 00000 00000 00000 00000 00000
+.stroke mid-southeast 00000 00000 00000 00000 02000 01000 00C00 00200 00180 00000 00000 00000
+
+.macrostroke west west.top west.bottom
+.macrostroke east east.top east.bottom
+.macrostroke hyphen mid-west mid-east
+
+20 00000 00000 00000 00000 00000 00000 00000 00000 00000 00000 00000 00000
+
+# ASCII subset
+.compose 22: east.top west.top
+.compose 23: east south hyphen mid-north mid-south
+.compose 24: north east.bottom south west.top hyphen mid-north mid-south
+.compose 25: east.bottom west.top mid-northeast mid-southwest
+.compose 26: north east.bottom south west.bottom mid-west mid-northwest mid-northeast mid-southeast
+.compose 27: mid-northeast
+.compose 28: mid-northeast mid-southeast
+.compose 29: mid-northwest mid-southwest
+.compose 2A: mid-north mid-northwest hyphen mid-southwest mid-south mid-southeast mid-northeast
+.compose 2B: hyphen mid-north mid-south
+.compose 2C: mid-southwest
+.compose 2D: hyphen
+.compose 2F: mid-northeast mid-southwest
+.compose 30: north east south west mid-northeast mid-southwest
+.compose 31: east mid-northeast
+.compose 32: north east.top south west.bottom hyphen
+.compose 33: north east.bottom south mid-northeast mid-east
+.compose 34: east west.top hyphen
+.compose 35: north east.bottom south west.top hyphen
+.compose 36: north east.bottom south west hyphen
+.compose 37: north east west.top
+.compose 38: north east south west hyphen
+.compose 39: north east south west.top hyphen
+.compose 3C: south mid-northeast mid-southwest
+.compose 3D: south hyphen
+.compose 3E: south mid-northwest mid-southeast
+.compose 3F: north east.top mid-east mid-south
+.compose 40: north east south west.bottom mid-west mid-south
+.compose 41: north east west hyphen
+.compose 42: north east south mid-north mid-east mid-south
+.compose 43: north south west
+.compose 44: north east south mid-north mid-south
+.compose 45: north south west mid-west
+.compose 46: north west mid-west
+.compose 47: north east.bottom south west mid-east
+.compose 48: east west hyphen
+.compose 49: north south mid-north mid-south
+.compose 4A: east south west.bottom
+.compose 4B: west mid-west mid-northeast mid-southeast
+.compose 4C: south west
+.compose 4D: east west mid-northwest mid-northeast
+.compose 4E: east west mid-northwest mid-southeast
+.compose 4F: north east south west
+.compose 50: north east.top west hyphen
+.compose 51: north east south west mid-southeast
+.compose 52: north east.top west hyphen mid-southeast
+.compose 53: north east.bottom south mid-northwest mid-east
+.compose 54: north mid-north mid-south
+.compose 55: east south west
+.compose 56: west mid-northeast mid-southwest
+.compose 57: east west mid-southwest mid-southeast
+.compose 58: mid-northwest mid-northeast mid-southwest mid-southeast
+.compose 59: mid-northwest mid-northeast mid-south
+.compose 5A: north south mid-northeast mid-southwest
+.compose 5B: north south west
+.compose 5C: mid-northwest mid-southeast
+.compose 5D: north east south
+.compose 5E: mid-southwest mid-southeast
+.compose 5F: south
+.compose 60: mid-northwest
+.compose 61: south west.bottom mid-west mid-south
+.compose 62: south west mid-west mid-southeast
+.compose 63: south west.bottom hyphen
+.compose 64: east south mid-east mid-southwest
+.compose 65: south west.bottom mid-west mid-southwest
+.compose 67: north east.top south west.top hyphen mid-southeast
+.compose 68: east.bottom west hyphen
+.compose 69: mid-south
+.compose 6A: east.bottom south
+.compose 6D: east.bottom west.bottom hyphen mid-south
+.compose 6E: west.bottom mid-west mid-southeast
+.compose 6F: east.bottom south west.bottom hyphen
+.compose 70: north west mid-west mid-northeast
+.compose 71: north east mid-northwest mid-east
+.compose 72: mid-south mid-east
+.compose 74: south west mid-west
+.compose 75: east.bottom south west.bottom
+.compose 76: west.bottom mid-southwest
+.compose 77: east.bottom west.bottom mid-southwest mid-southeast
+.compose 79: west.top hyphen east south
+.compose 7B: north south mid-northwest mid-west mid-southwest
+.compose 7C: mid-north mid-south
+.compose 7D: north south mid-northeast mid-east mid-southeast
+.compose 7E: north
+
+# Extras
+.compose 80: north east
+.compose 81: east hyphen
+.compose 82: east south
+.compose 83: north south west.bottom east.bottom
+.compose 85: north south hyphen
+.compose 86: east south west hyphen
+.compose 87: north east.bottom west.bottom
+.compose 88: east.top south west.top
+.compose 89: north west.top mid-northwest mid-southeast
+.compose 8A: north east.top mid-northeast mid-southwest
+.compose 8B: east.bottom south mid-northwest mid-southeast
+.compose 8C: south west.bottom mid-northeast mid-southwest
+.compose 8D: north east.bottom south west.top mid-northwest mid-southeast
+.compose 8E: north east.top south west.bottom mid-northeast mid-southwest
+.compose 90: east south west mid-north mid-south
+.compose 91: east.bottom south west.bottom mid-south
+.compose 92: north east west.top hyphen mid-southwest
+.compose 93: north east south hyphen
+.compose 94: north south west.bottom mid-west mid-southwest
+.compose 96: west east mid-northeast mid-southwest
+.compose 97: north east south mid-east
+.compose 98: mid-northeast mid-north mid-northwest mid-southwest mid-south mid-southeast
+.compose 99: west north
+.compose 9A: mid-northwest mid-west mid-southwest mid-southeast mid-east mid-northeast
+.compose B0: north east.top west.top hyphen
+.compose C4: east south mid-northeast mid-southwest
+.compose C6: north east south west mid-north mid-south
+.compose CC: east mid-northeast mid-southwest
+.compose D0: north east west
+.compose D1: east.top west.top hyphen mid-north mid-south
+.compose D3: north south mid-northwest mid-southwest
+.compose E3: north west.bottom mid-west mid-south south
+.compose E4: north east.bottom south west.bottom hyphen mid-northwest
+.compose EC: mid-northwest mid-southwest mid-southeast
+.compose ED: east.top west hyphen
+.compose F1: north west.bottom mid-west mid-southeast
+.compose F5: north east.bottom south hyphen west.bottom
