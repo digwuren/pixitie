@@ -552,13 +552,16 @@ inputs/glyphlist.txt:
 
 #### Overview generation rules
 
-.PHONY: overviews
+MONOBOOK_FONTS = Monobook-12 Monobook-16 Monobook-20 Monobook-24 Monobook-28 \
+                 Monobook-16-Bold Monobook-20-Bold Monobook-24-Bold Monobook-28-Bold
 OLD_HYLIAN_FONTS = Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hylian-NLQ-Dense
 
+.PHONY: overviews
 overviews: $(foreach font, \
-    $(OLD_HYLIAN_FONTS), \
+    $(MONOBOOK_FONTS) $(OLD_HYLIAN_FONTS), \
     overviews/$(font).pdf)
 
+$(foreach font, $(MONOBOOK_FONTS), overviews/$(font).ps): monobook.cs
 $(foreach font, $(OLD_HYLIAN_FONTS), overviews/$(font).ps): old-hylian.cs
 
 ## The generation templates
