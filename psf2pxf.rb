@@ -10,6 +10,7 @@ begin
   $0 = 'psf2pxf.rb' # for error reporting
   $charset_output_filename = nil
   $extra_header = []
+  $charset_extraction_suppressed = false
   GetoptLong::new(
     ['--header', '-h', GetoptLong::REQUIRED_ARGUMENT],
     ['--output-charset', GetoptLong::REQUIRED_ARGUMENT],
@@ -19,6 +20,7 @@ begin
         $charset_output_filename = arg
       when '--header' then
         $extra_header.push arg
+        $charset_extraction_suppressed |= arg =~ /\^\s*charset\s+/
       else raise "Unknown option #{opt}"
     end
   end
@@ -85,7 +87,7 @@ class Charset_Emitter
     super()
     @port = port
     @curstretch = nil
-    @pending_oneways = []
+    @pending_aliases = []
     return
   end
 
@@ -101,25 +103,40 @@ class Charset_Emitter
     @curstretch[:last_native] = nc
     @curstretch[:last_unicode] = unicode
     extra_unicodes.each do |xu|
-      @pending_oneways.push "code %02X <- U+%04X" % [nc, xu]
+      @pending_aliases.push "code %02X <- U+%04X" % [nc, xu]
+    end
+    if nc == 0x7E and unicode == 0x7E and @curstretch[:first_native] <= 0x20 then
+      # Apparently, ascii.cs is a subset of this charset.  Let's make use of it.
+      if @curstretch[:first_native] < 0x20 then
+        @curstretch[:last_native] = @curstretch[:last_unicode] = 0x1F
+        @port.puts format_curstretch
+      end
+      @curstretch = nil
+      @port.puts "include ascii.cs"
+      flush # just in case @pending_aliases is not empty
     end
   end
 
+  def format_curstretch
+    if @curstretch[:first_native] == @curstretch[:last_native] then
+      return "code %02X = U+%04X" %
+          [:first_native, :first_unicode].
+              map{|k| @curstretch[k]}
+    else
+      return "code %02X .. %02X = U+%04X .. U+%04X" %
+          [:first_native, :last_native, :first_unicode, :last_unicode].
+              map{|k| @curstretch[k]}
+    end
+  end
+  private :format_curstretch
+
   def flush
     if @curstretch then
-      if @curstretch[:first_native] == @curstretch[:last_native] then
-        @port.puts "code %02X = U+%04X" %
-            [:first_native, :first_unicode].
-                map{|k| @curstretch[k]}
-      else
-        @port.puts "code %02X .. %02X = U+%04X .. U+%04X" %
-            [:first_native, :last_native, :first_unicode, :last_unicode].
-                map{|k| @curstretch[k]}
-      end
+      @port.puts format_curstretch
       @curstretch = nil
-      @port.puts @pending_oneways
-      @pending_oneways = []
     end
+    @port.puts @pending_aliases
+    @pending_aliases = []
     return
   end
 end
@@ -135,8 +152,8 @@ open_possibly_gzipped ARGV[0] do |port|
   else
     char_count = 256
   end
-  if mode & 0x02 != 0 and $charset_output_filename.nil? then
-    raise 'the font has PSF1_MODEHASTAB set but --output-charset was not used'
+  if mode & 0x02 != 0 and $charset_output_filename.nil? and !$charset_extraction_suppressed then
+    raise 'the font has PSF1_MODEHASTAB set but --output-charset was not used, nor was a charset header file specified'
   end
   if mode & 0x04 != 0 then
     raise 'PSF1_MODEHASSEQ is not supported'

@@ -27,7 +27,7 @@ code 1C = U+2195
 code 1D = U+2194
 code 1E = U+21B5
 code 1F = U+03C0
-code 20 .. 7E = U+0020 .. U+007E
+include ascii.cs
 code 20 <- U+00A0
 code 4B <- U+212A
 code 5F <- U+F804

@@ -33,7 +33,7 @@ code 1C <- U+2319
 code 1D = U+2194
 code 1E = U+25B2
 code 1F = U+25BC
-code 20 .. 7E = U+0020 .. U+007E
+include ascii.cs
 code 7F = U+2302
 code 9F .. A5 = U+1200 .. U+1206
 code A6 .. E4 = U+1208 .. U+1246
