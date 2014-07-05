@@ -137,8 +137,8 @@ Bradford-8-Monospaced.pxf: options := -b2
 NLQ401_Charset.png:
 	wget 'http://www.cpcwiki.eu/imgs/a/a1/NLQ401_Charset.png'
 
-NLQ401.pxf: NLQ401_Charset.png parse-image.rb
-	./parse-image.rb \
+NLQ401.pxf: NLQ401_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,15 \
           --skew=8 \
           --range=0x18..0x7E \
@@ -155,10 +155,10 @@ NLQ401.pxf: NLQ401_Charset.png parse-image.rb
           -h 'vertical-compression 1/2' \
           -h 'circular-dots' \
           -h 'baseline 7' \
-          < $< > $@
+          $< > $@
 
-NLQ401-Draft.pxf: NLQ401_Charset.png parse-image.rb
-	./parse-image.rb \
+NLQ401-Draft.pxf: NLQ401_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,530 \
           --skew=8 \
           --range=0x18..0xFF \
@@ -175,10 +175,10 @@ NLQ401-Draft.pxf: NLQ401_Charset.png parse-image.rb
           -h 'horizontal-compression 1/2' \
           -h 'circular-dots' \
           -h 'baseline 5' \
-          < $< > $@
+          $< > $@
 
-NLQ401-Draft-Extra.pxf: NLQ401_Charset.png parse-image.rb
-	./parse-image.rb \
+NLQ401-Draft-Extra.pxf: NLQ401_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,985 \
           --range=0x80..0xFF \
           --pad-bottom=3 \
@@ -193,14 +193,14 @@ NLQ401-Draft-Extra.pxf: NLQ401_Charset.png parse-image.rb
           -h 'aspect-ratio 6:5' \
           -h 'circular-dots' \
           -h 'baseline 5' \
-          < $< > $@
+          $< > $@
 
 # DMP2000 font
 DMP2000_Charset.png:
 	wget 'http://www.cpcwiki.eu/imgs/f/f3/DMP2000_Charset.png'
 
-DMP2000.pxf: DMP2000_Charset.png parse-image.rb
-	./parse-image.rb \
+DMP2000.pxf: DMP2000_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,17 \
           --range=0x00..0x7F \
           --pad-bottom=2 \
@@ -217,14 +217,14 @@ DMP2000.pxf: DMP2000_Charset.png parse-image.rb
           -h 'baseline 7' \
           -h '' \
           -h 'variant-bit Underscored /columns |4' \
-          < $< > $@
+          $< > $@
 
 # DMP3000 fonts
 DMP3000_Charset.png:
 	wget 'http://www.cpcwiki.eu/imgs/8/80/DMP3000_Charset.png'
 
-DMP3000-NLQ.pxf: DMP3000_Charset.png parse-image.rb
-	./parse-image.rb \
+DMP3000-NLQ.pxf: DMP3000_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,17 \
           --range=0x00..0x7F \
           --pad-bottom=2 \
@@ -241,10 +241,10 @@ DMP3000-NLQ.pxf: DMP3000_Charset.png parse-image.rb
           -h 'baseline 7' \
           -h '' \
           -h 'variant-bit Underscored /columns |4' \
-          < $< > $@
+          $< > $@
 
-DMP3000-NLQ-Italic.pxf: DMP3000_Charset.png parse-image.rb
-	./parse-image.rb \
+DMP3000-NLQ-Italic.pxf: DMP3000_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,537 \
           --range=0x00..0x7F \
           --pad-bottom=2 \
@@ -261,10 +261,10 @@ DMP3000-NLQ-Italic.pxf: DMP3000_Charset.png parse-image.rb
           -h 'baseline 7' \
           -h '' \
           -h 'variant-bit Underscored /columns |4' \
-          < $< > $@
+          $< > $@
 
-DMP3000-NLQ-Extra.pxf: DMP3000_Charset.png parse-image.rb
-	./parse-image.rb \
+DMP3000-NLQ-Extra.pxf: DMP3000_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,1057 \
           --range=0x00..0x4B \
           --pad-bottom=2 \
@@ -279,10 +279,10 @@ DMP3000-NLQ-Extra.pxf: DMP3000_Charset.png parse-image.rb
           -h 'vertical-compression 1/2' \
           -h 'circular-dots' \
           -h 'baseline 7' \
-          < $< > $@
+          $< > $@
 
-DMP3000-Draft-Extra.pxf: DMP3000_Charset.png parse-image.rb
-	./parse-image.rb \
+DMP3000-Draft-Extra.pxf: DMP3000_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,1442 \
           --range=0x00..0x6C \
           --pad-bottom=3 \
@@ -297,14 +297,14 @@ DMP3000-Draft-Extra.pxf: DMP3000_Charset.png parse-image.rb
           -h 'horizontal-compression 1/2' \
           -h 'circular-dots' \
           -h 'baseline 5' \
-          < $< > $@
+          $< > $@
 
 # DMP3160 fonts
 DMP3160_Charset.png:
 	wget 'http://www.cpcwiki.eu/imgs/a/a6/DMP3160_Charset.png'
 
-DMP3160-NLQ.pxf: DMP3160_Charset.png parse-image.rb
-	./parse-image.rb \
+DMP3160-NLQ.pxf: DMP3160_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,17 \
           --range=0x00..0x7F \
           --pad-bottom=2 \
@@ -321,10 +321,10 @@ DMP3160-NLQ.pxf: DMP3160_Charset.png parse-image.rb
           -h 'baseline 7' \
           -h '' \
           -h 'variant-bit Underscored /columns |4' \
-          < $< > $@
+          $< > $@
 
-DMP3160-NLQ-Italic.pxf: DMP3160_Charset.png parse-image.rb
-	./parse-image.rb \
+DMP3160-NLQ-Italic.pxf: DMP3160_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=12,537 \
           --range=0x00..0x7F \
           --pad-bottom=2 \
@@ -341,10 +341,10 @@ DMP3160-NLQ-Italic.pxf: DMP3160_Charset.png parse-image.rb
           -h 'baseline 7' \
           -h '' \
           -h 'variant-bit Underscored /columns |4' \
-          < $< > $@
+          $< > $@
 
-DMP3160-Draft.pxf: DMP3160_Charset.png parse-image.rb
-	./parse-image.rb \
+DMP3160-Draft.pxf: DMP3160_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=912,17 \
           --range=0x00..0x7F \
           --pad-bottom=3 \
@@ -361,10 +361,10 @@ DMP3160-Draft.pxf: DMP3160_Charset.png parse-image.rb
           -h 'baseline 5' \
           -h '' \
           -h 'variant-bit Underscored /columns |8 : &~8' \
-          < $< > $@
+          $< > $@
 
-DMP3160-Draft-Italic.pxf: DMP3160_Charset.png parse-image.rb
-	./parse-image.rb \
+DMP3160-Draft-Italic.pxf: DMP3160_Charset.png picture2pxf.rb
+	./picture2pxf.rb \
           --origin=912,537 \
           --range=0x00..0x7F \
           --pad-bottom=3 \
@@ -381,7 +381,7 @@ DMP3160-Draft-Italic.pxf: DMP3160_Charset.png parse-image.rb
           -h 'baseline 5' \
           -h '' \
           -h 'variant-bit Underscored /columns |8 : &~8' \
-          < $< > $@
+          $< > $@
 
 # Modified Bradford fonts by Stan Kazmiruk
 
