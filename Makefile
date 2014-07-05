@@ -4,10 +4,6 @@ RESOURCES = ascii.cs \
   epson-fx80.cs epson-fx80-variants.pxfi EpsonFX80.pxf \
   EpsonFX80-Italic.pxf \
   bradford.cs \
-  Bradford-1-Monospaced.pxf Bradford-2-Monospaced.pxf \
-  Bradford-3-Monospaced.pxf Bradford-4-Monospaced.pxf \
-  Bradford-5-Monospaced.pxf Bradford-6-Monospaced.pxf \
-  Bradford-7-Monospaced.pxf Bradford-8-Monospaced.pxf \
   Bradford-Kazmiruk-T-Monospaced.pxf \
   Bradford-Kazmiruk-O-Monospaced.pxf \
   Bradford-Kazmiruk-M-Monospaced.pxf \
@@ -543,8 +539,12 @@ inputs/glyphlist.txt:
 #### Overview generation rules
 
 # TODO: OVERVIEWED_FONTS should eventually list all included fonts, and then be renamed accordingly
-OVERVIEWED_FONTS = $(AMSTRAD_FONTS) $(MONOBOOK_FONTS) $(7SEG_FONTS) $(OLD_HYLIAN_FONTS)
+OVERVIEWED_FONTS = $(BRADFORD_ORIGINAL_FONTS) $(AMSTRAD_FONTS) $(MONOBOOK_FONTS) $(7SEG_FONTS) $(OLD_HYLIAN_FONTS)
 
+BRADFORD_ORIGINAL_FONTS = Bradford-1-Monospaced Bradford-2-Monospaced \
+                          Bradford-3-Monospaced Bradford-4-Monospaced \
+                          Bradford-5-Monospaced Bradford-6-Monospaced \
+                          Bradford-7-Monospaced Bradford-8-Monospaced
 AMSTRAD_FONTS = DMP2000 \
                 DMP3000-NLQ DMP3000-NLQ-Italic DMP3000-NLQ-Extra DMP3000-Draft-Extra \
                 DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic \
@@ -567,6 +567,7 @@ overviews/NLQ401.ps: NLQ401.cs
 overviews/NLQ401-Draft.ps: NLQ401-Draft.cs
 overviews/NLQ401-Draft-Extra.ps: NLQ401-Draft-Extra.cs
 
+$(foreach font, $(BRADFORD_ORIGINAL_FONTS), overviews/$(font).ps): bradford.cs
 $(foreach font, $(MONOBOOK_FONTS), overviews/$(font).ps): monobook.cs
 $(foreach font, $(7SEG_FONTS), overviews/$(font).ps): 7seg.cs
 $(foreach font, $(OLD_HYLIAN_FONTS), overviews/$(font).ps): old-hylian.cs
