@@ -53,7 +53,7 @@ RESOURCES = ascii.cs \
   monobook.cs \
   Monobook-12.pxf Monobook-16.pxf Monobook-20.pxf Monobook-24.pxf Monobook-28.pxf \
   Monobook-16-Bold.pxf Monobook-20-Bold.pxf Monobook-24-Bold.pxf Monobook-28-Bold.pxf \
-  glyphlist.txt
+  inputs/glyphlist.txt
 
 pixitie: pixitie-code.rb $(RESOURCES)
 	( \
@@ -61,7 +61,7 @@ pixitie: pixitie-code.rb $(RESOURCES)
           for f in $(RESOURCES); \
           do \
             echo; \
-            echo "/$$f/"; \
+            echo "/$$(basename "$$f")/"; \
             cat "$$f"; \
           done \
         ) > $@
@@ -537,3 +537,8 @@ Monobook-24-Bold.pxf: inputs/monobook-font-0.22/mb24b.bdf
 
 Monobook-28-Bold.pxf: inputs/monobook-font-0.22/mb28b.bdf
 	./bdf2pxf.pl -c monobook.cs $< > $@
+
+#### Downloading rules
+
+inputs/glyphlist.txt:
+        wget 'http://partners.adobe.com/public/developer/en/opentype/glyphlist.txt' -O $@
