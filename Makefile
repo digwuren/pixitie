@@ -1,25 +1,20 @@
 all: pixitie
 
 RESOURCES = ascii.cs \
-  epson-fx80.cs epson-fx80-variants.pxfi EpsonFX80.pxf \
-  EpsonFX80-Italic.pxf \
+  epson-fx80.cs epson-fx80-variants.pxfi \
   bradford.cs \
   Bradford-Greek-Monospaced.cs \
-  ZXSpectrum-Chargen.pxf zx-spectrum.cs ZXSpectrum-Chargen.8x8.hex \
+  zx-spectrum.cs ZXSpectrum-Chargen.8x8.hex \
   dmp3000-extra.cs \
   NLQ401.cs NLQ401-Draft.cs NLQ401-Draft-Extra.cs \
   7seg.cs \
   abridged-unicode.txt \
   old-hylian.cs \
   braille.cs \
-  Braille-Draft.pxf \
   taiogeuna.cs \
-  Taiogeuna-Draft.pxf Taiogeuna-NLQ.pxf \
   latin1.cs \
-  Gohufont-11.pxf Gohufont-11-Bold.pxf Gohufont-14.pxf Gohufont-14-Bold.pxf \
   Gohufont-Uni-11.cs Gohufont-Uni-14.cs \
-  Gohufont-Uni-11.pxf Gohufont-Uni-11-Bold.pxf Gohufont-Uni-14.pxf Gohufont-Uni-14-Bold.pxf \
-  Default8x16.cs Default8x16.pxf \
+  Default8x16.cs \
   monobook.cs \
   $(foreach font, $(OVERVIEWED_FONTS), $(font).pxf) \
   inputs/glyphlist.txt
@@ -36,7 +31,7 @@ pixitie: pixitie-code.rb $(RESOURCES)
         ) > $@
 	chmod +x $@
 
-ZXSpectrum-Chargen.8x8.hex: ZXSpectrum-Chargen.8x8 i8hex-encode.rb
+%.hex: % i8hex-encode.rb
 	./i8hex-encode.rb < $< > $@
 
 clean:
@@ -523,6 +518,8 @@ inputs/glyphlist.txt:
 
 # TODO: OVERVIEWED_FONTS should eventually list all included fonts, and then be renamed accordingly
 OVERVIEWED_FONTS = \
+    EpsonFX80 EpsonFX80-Italic \
+    \
     Bradford-1-Monospaced Bradford-2-Monospaced Bradford-3-Monospaced \
     Bradford-4-Monospaced Bradford-5-Monospaced Bradford-6-Monospaced \
     Bradford-7-Monospaced Bradford-8-Monospaced \
@@ -546,14 +543,25 @@ OVERVIEWED_FONTS = \
     DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic \
     NLQ401 NLQ401-Draft NLQ401-Draft-Extra \
     \
+    ZXSpectrum-Chargen \
+    \
+    Default8x16 \
+    \
+    Gohufont-11 Gohufont-11-Bold Gohufont-14 Gohufont-14-Bold \
+    Gohufont-Uni-11 Gohufont-Uni-11-Bold Gohufont-Uni-14 Gohufont-Uni-14-Bold \
+    \
     Monobook-12 Monobook-16 Monobook-20 Monobook-24 Monobook-28 \
     Monobook-16-Bold Monobook-20-Bold Monobook-24-Bold Monobook-28-Bold \
     \
+    Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hylian-NLQ-Dense \
+    \
+    Taiogeuna-Draft Taiogeuna-NLQ \
+    \
+    Braille-Draft \
+    \
     7seg-Boxy-Draft 7seg-Boxy-NLQ 7seg-Boxy-NLQ-Rounded \
     7seg-Boxy-Narrowed-Draft 7seg-Boxy-Narrowed-NLQ 7seg-Boxy-Narrowed-NLQ-Rounded \
-    7seg-Mini-Draft \
-    \
-    Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hylian-NLQ-Dense
+    7seg-Mini-Draft
 
 .PHONY: overviews
 overviews: $(foreach font, $(OVERVIEWED_FONTS), overviews/$(font).pdf)
