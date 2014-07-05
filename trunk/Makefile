@@ -538,6 +538,13 @@ Monobook-24-Bold.pxf: inputs/monobook-font-0.22/mb24b.bdf
 Monobook-28-Bold.pxf: inputs/monobook-font-0.22/mb28b.bdf
 	./bdf2pxf.pl -c monobook.cs $< > $@
 
+# console-fonts/ extraction rules
+
+Default8x16.pxf Default8x16.cs: inputs/consolefonts/default8x16.psf.gz psf2pxf.rb
+	./psf2pxf.rb $< --output-charset Default8x16.cs \
+        -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
+        > Default8x16.pxf
+
 #### Downloading rules
 
 inputs/glyphlist.txt:
