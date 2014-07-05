@@ -145,12 +145,19 @@ open_possibly_gzipped ARGV[0] do |port|
     # The rows array now holds String:s of bits.
     raise "Broken data" unless rows.length == charsize
     i += charsize
+    # pad the bitmap's bottom so that we could represent each column with full nibbles
+    rows.push '0' * 8 while rows.length % 4 != 0
+    odd_nybbles_per_column = rows.length % 8 != 0
     $baseline_guesser.feed rows
     pxf_line = "%02X" % charcode
     (0 ... 8).each do |i|
       column = rows.map{|row| row[i]}.join ''
-      column << '0' while column.length % 4 != 0
-      pxf_line << " " << [column].pack('B*').unpack('H*').first
+      hex_column = [column].pack('B*').unpack('H*').first
+      # Our column is padded to a four-bit alignment.  Unfortunately,
+      # unpack('H*') will pad it to an eight-bit alignment.  We'll have to
+      # discard the trailing zero when this happens.
+      hex_column[-1] = '' if odd_nybbles_per_column
+      pxf_line << " " << hex_column
     end
     $glyph_data.push pxf_line
   end
