@@ -7,7 +7,7 @@ RESOURCES = ascii.cs \
   zx-spectrum.cs ZXSpectrum-Chargen.8x8.hex \
   dmp3000-extra.cs \
   NLQ401.cs NLQ401-Draft.cs NLQ401-Draft-Extra.cs \
-  7seg.cs \
+  7seg.cs 14seg.cs \
   abridged-unicode.txt \
   old-hylian.cs \
   braille.cs \
@@ -607,7 +607,9 @@ OVERVIEWED_FONTS = \
     \
     7seg-Boxy-Draft 7seg-Boxy-NLQ 7seg-Boxy-NLQ-Rounded \
     7seg-Boxy-Narrowed-Draft 7seg-Boxy-Narrowed-NLQ 7seg-Boxy-Narrowed-NLQ-Rounded \
-    7seg-Mini-Draft
+    7seg-Mini-Draft \
+    \
+    14seg
 
 .PHONY: overviews
 overviews: $(foreach font, $(OVERVIEWED_FONTS), overviews/$(font).pdf overviews/$(font).ps)
