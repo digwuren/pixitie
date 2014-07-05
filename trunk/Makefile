@@ -14,7 +14,7 @@ RESOURCES = ascii.cs \
   taiogeuna.cs \
   latin1.cs \
   Gohufont-Uni-11.cs Gohufont-Uni-14.cs \
-  Default8x16.cs \
+  Default8x9.cs Default8x16.cs \
   monobook.cs \
   $(foreach font, $(OVERVIEWED_FONTS), $(font).pxf) \
   inputs/glyphlist.txt
