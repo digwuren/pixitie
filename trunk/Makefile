@@ -554,14 +554,20 @@ inputs/glyphlist.txt:
 
 MONOBOOK_FONTS = Monobook-12 Monobook-16 Monobook-20 Monobook-24 Monobook-28 \
                  Monobook-16-Bold Monobook-20-Bold Monobook-24-Bold Monobook-28-Bold
+7SEG_FONTS = 7seg-Boxy-Draft 7seg-Boxy-NLQ 7seg-Boxy-NLQ-Rounded \
+             7seg-Boxy-Narrowed-Draft 7seg-Boxy-Narrowed-NLQ 7seg-Boxy-Narrowed-NLQ-Rounded \
+             7seg-Mini-Draft
 OLD_HYLIAN_FONTS = Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hylian-NLQ-Dense
 
 .PHONY: overviews
 overviews: $(foreach font, \
-    $(MONOBOOK_FONTS) $(OLD_HYLIAN_FONTS), \
+    $(MONOBOOK_FONTS) \
+    $(7SEG_FONTS) \
+    $(OLD_HYLIAN_FONTS), \
     overviews/$(font).pdf)
 
 $(foreach font, $(MONOBOOK_FONTS), overviews/$(font).ps): monobook.cs
+$(foreach font, $(7SEG_FONTS), overviews/$(font).ps): 7seg.cs
 $(foreach font, $(OLD_HYLIAN_FONTS), overviews/$(font).ps): old-hylian.cs
 
 ## The generation templates
