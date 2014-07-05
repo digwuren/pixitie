@@ -552,6 +552,10 @@ inputs/glyphlist.txt:
 
 #### Overview generation rules
 
+AMSTRAD_FONTS = DMP2000 \
+                DMP3000-NLQ DMP3000-NLQ-Italic DMP3000-NLQ-Extra DMP3000-Draft-Extra \
+                DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic \
+                NLQ401 NLQ401-Draft NLQ401-Draft-Extra
 MONOBOOK_FONTS = Monobook-12 Monobook-16 Monobook-20 Monobook-24 Monobook-28 \
                  Monobook-16-Bold Monobook-20-Bold Monobook-24-Bold Monobook-28-Bold
 7SEG_FONTS = 7seg-Boxy-Draft 7seg-Boxy-NLQ 7seg-Boxy-NLQ-Rounded \
@@ -561,10 +565,19 @@ OLD_HYLIAN_FONTS = Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hyli
 
 .PHONY: overviews
 overviews: $(foreach font, \
+    $(AMSTRAD_FONTS) \
     $(MONOBOOK_FONTS) \
     $(7SEG_FONTS) \
     $(OLD_HYLIAN_FONTS), \
     overviews/$(font).pdf)
+
+$(foreach font, DMP2000 DMP3000-NLQ DMP3000-NLQ-Italic \
+    DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic, \
+    overviews/$(font).ps): epson-fx80.cs
+$(foreach font, DMP3000-NLQ-Extra DMP3000-Draft-Extra, overviews/$(font).ps): dmp3000-extra.cs
+overviews/NLQ401.ps: NLQ401.cs
+overviews/NLQ401-Draft.ps: NLQ401-Draft.cs
+overviews/NLQ401-Draft-Extra.ps: NLQ401-Draft-Extra.cs
 
 $(foreach font, $(MONOBOOK_FONTS), overviews/$(font).ps): monobook.cs
 $(foreach font, $(7SEG_FONTS), overviews/$(font).ps): 7seg.cs
