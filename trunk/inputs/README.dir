@@ -9,3 +9,8 @@ This directory holds input data for Pixitie fonts from miscellaneous sources:
 
 - BRAD-GRK.LBR contains more extra fonts for the Bradford utility and comes from
   <wget 'http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/BRAD-GRK.LBR>.
+
+- glyphlist.txt is the Adobe Glyph List, downloaded from
+  <http://partners.adobe.com/public/developer/en/opentype/glyphlist.txt>.
+  Pixitie uses it to construct meaningful names for the characters in the
+  generated Type 3 fonts.
