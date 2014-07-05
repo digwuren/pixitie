@@ -4,7 +4,7 @@ aspect-ratio 6:5
 horizontal-compression 1/2
 vertical-compression 1/2
 circular-dots
-baseline 5
+baseline 7
 
 # Special case: period drawn outside the 7-segment framework
 # (borrowed from DMP3000-NLQ.pxf / DMP3160-NLQ.pxf)
