@@ -541,4 +541,4 @@ Monobook-28-Bold.pxf: inputs/monobook-font-0.22/mb28b.bdf
 #### Downloading rules
 
 inputs/glyphlist.txt:
-        wget 'http://partners.adobe.com/public/developer/en/opentype/glyphlist.txt' -O $@
+	wget 'http://partners.adobe.com/public/developer/en/opentype/glyphlist.txt' -O $@
