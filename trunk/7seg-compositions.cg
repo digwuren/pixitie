@@ -1,5 +1,9 @@
 # Structure of 7-segment glyphs.  See 7seg.cs for the charset.
 
+# This file will be .include:d by several different *.pxf.cg font definitions
+# using compose-glyphs.pl, with a few slightly different .stroke declarations
+# for the individual segments, to generate a few slightly different fonts.
+
 # ASCII subset
 .compose 22: b f
 .compose 27: f
