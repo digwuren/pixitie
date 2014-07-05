@@ -525,35 +525,32 @@ inputs/glyphlist.txt:
 #### Overview generation rules
 
 # TODO: OVERVIEWED_FONTS should eventually list all included fonts, and then be renamed accordingly
-OVERVIEWED_FONTS = $(BRADFORD_ORIGINAL_FONTS) $(BRADFORD_EXTRA_FONTS) \
-                   $(AMSTRAD_FONTS) \
-                   $(MONOBOOK_FONTS) \
-                   $(7SEG_FONTS) \
-                   $(OLD_HYLIAN_FONTS)
-
-BRADFORD_ORIGINAL_FONTS = Bradford-1-Monospaced Bradford-2-Monospaced \
-                          Bradford-3-Monospaced Bradford-4-Monospaced \
-                          Bradford-5-Monospaced Bradford-6-Monospaced \
-                          Bradford-7-Monospaced Bradford-8-Monospaced
-
-BRADFORD_EXTRA_FONTS = Bradford-Extra-9-Monospaced Bradford-Extra-A-Monospaced \
-                       Bradford-Extra-B-Monospaced Bradford-Extra-C-Monospaced \
-                       Bradford-Extra-F-Monospaced Bradford-Extra-J-Monospaced \
-                       Bradford-Extra-K-Monospaced Bradford-Extra-L-Monospaced \
-                       Bradford-Extra-M-Monospaced Bradford-Extra-N-Monospaced \
-                       Bradford-Extra-O-Monospaced Bradford-Extra-P-Monospaced \
-                       Bradford-Extra-S-Monospaced Bradford-Extra-T-Monospaced
-
-AMSTRAD_FONTS = DMP2000 \
-                DMP3000-NLQ DMP3000-NLQ-Italic DMP3000-NLQ-Extra DMP3000-Draft-Extra \
-                DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic \
-                NLQ401 NLQ401-Draft NLQ401-Draft-Extra
-MONOBOOK_FONTS = Monobook-12 Monobook-16 Monobook-20 Monobook-24 Monobook-28 \
-                 Monobook-16-Bold Monobook-20-Bold Monobook-24-Bold Monobook-28-Bold
-7SEG_FONTS = 7seg-Boxy-Draft 7seg-Boxy-NLQ 7seg-Boxy-NLQ-Rounded \
-             7seg-Boxy-Narrowed-Draft 7seg-Boxy-Narrowed-NLQ 7seg-Boxy-Narrowed-NLQ-Rounded \
-             7seg-Mini-Draft
-OLD_HYLIAN_FONTS = Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hylian-NLQ-Dense
+OVERVIEWED_FONTS = \
+    Bradford-1-Monospaced Bradford-2-Monospaced Bradford-3-Monospaced \
+    Bradford-4-Monospaced Bradford-5-Monospaced Bradford-6-Monospaced \
+    Bradford-7-Monospaced Bradford-8-Monospaced \
+    \
+    Bradford-Extra-9-Monospaced Bradford-Extra-A-Monospaced \
+    Bradford-Extra-B-Monospaced Bradford-Extra-C-Monospaced \
+    Bradford-Extra-F-Monospaced Bradford-Extra-J-Monospaced \
+    Bradford-Extra-K-Monospaced Bradford-Extra-L-Monospaced \
+    Bradford-Extra-M-Monospaced Bradford-Extra-N-Monospaced \
+    Bradford-Extra-O-Monospaced Bradford-Extra-P-Monospaced \
+    Bradford-Extra-S-Monospaced Bradford-Extra-T-Monospaced \
+    \
+    DMP2000 \
+    DMP3000-NLQ DMP3000-NLQ-Italic DMP3000-NLQ-Extra DMP3000-Draft-Extra \
+    DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic \
+    NLQ401 NLQ401-Draft NLQ401-Draft-Extra \
+    \
+    Monobook-12 Monobook-16 Monobook-20 Monobook-24 Monobook-28 \
+    Monobook-16-Bold Monobook-20-Bold Monobook-24-Bold Monobook-28-Bold \
+    \
+    7seg-Boxy-Draft 7seg-Boxy-NLQ 7seg-Boxy-NLQ-Rounded \
+    7seg-Boxy-Narrowed-Draft 7seg-Boxy-Narrowed-NLQ 7seg-Boxy-Narrowed-NLQ-Rounded \
+    7seg-Mini-Draft \
+    \
+    Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hylian-NLQ-Dense
 
 .PHONY: overviews
 overviews: $(foreach font, $(OVERVIEWED_FONTS), overviews/$(font).pdf)
