@@ -1,6 +1,6 @@
 This directory holds input data for Pixitie fonts from miscellaneous sources:
 
-- monobook-font-0.22 has a Google Code project page at
+- monobook-font-0.22/ has a Google Code project page at
   <https://code.google.com/p/monobook-font/>.
 
 - BRFONTS.LBR is a CP/M archive ('library') file containing extra fonts for the
@@ -14,3 +14,5 @@ This directory holds input data for Pixitie fonts from miscellaneous sources:
   <http://partners.adobe.com/public/developer/en/opentype/glyphlist.txt>.
   Pixitie uses it to construct meaningful names for the characters in the
   generated Type 3 fonts.
+
+- consolefonts/ is extracted from the Debian console-data package, version 2:1.12-2.
