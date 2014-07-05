@@ -50,6 +50,9 @@ RESOURCES = ascii.cs \
   Gohufont-Uni-11.cs Gohufont-Uni-14.cs \
   Gohufont-Uni-11.pxf Gohufont-Uni-11-Bold.pxf Gohufont-Uni-14.pxf Gohufont-Uni-14-Bold.pxf \
   Default8x16.cs Default8x16.pxf \
+  monobook.cs \
+  Monobook-12.pxf Monobook-16.pxf Monobook-20.pxf Monobook-24.pxf Monobook-28.pxf \
+  Monobook-16-Bold.pxf Monobook-20-Bold.pxf Monobook-24-Bold.pxf Monobook-28-Bold.pxf \
   glyphlist.txt
 
 pixitie: pixitie-code.rb $(RESOURCES)
@@ -506,3 +509,31 @@ Bradford-Extra-T.brad: EXTRAFON.LBR
 # Braille font generation rule
 Braille-Draft.pxf.cg: generate-Braille-Draft.pxf.cg.pl
 	./generate-Braille-Draft.pxf.cg.pl > $@
+
+# Monobook conversion rules
+Monobook-12.pxf: inputs/monobook-font-0.22/mb12m.bdf
+	./bdf2pxf.pl -c monobook.cs $< > $@
+
+Monobook-16.pxf: inputs/monobook-font-0.22/mb16m.bdf
+	./bdf2pxf.pl -c monobook.cs $< > $@
+
+Monobook-20.pxf: inputs/monobook-font-0.22/mb20m.bdf
+	./bdf2pxf.pl -c monobook.cs $< > $@
+
+Monobook-24.pxf: inputs/monobook-font-0.22/mb24m.bdf
+	./bdf2pxf.pl -c monobook.cs $< > $@
+
+Monobook-28.pxf: inputs/monobook-font-0.22/mb28m.bdf
+	./bdf2pxf.pl -c monobook.cs $< > $@
+
+Monobook-16-Bold.pxf: inputs/monobook-font-0.22/mb16b.bdf
+	./bdf2pxf.pl -c monobook.cs $< > $@
+
+Monobook-20-Bold.pxf: inputs/monobook-font-0.22/mb20b.bdf
+	./bdf2pxf.pl -c monobook.cs $< > $@
+
+Monobook-24-Bold.pxf: inputs/monobook-font-0.22/mb24b.bdf
+	./bdf2pxf.pl -c monobook.cs $< > $@
+
+Monobook-28-Bold.pxf: inputs/monobook-font-0.22/mb28b.bdf
+	./bdf2pxf.pl -c monobook.cs $< > $@
