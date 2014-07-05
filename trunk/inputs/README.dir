@@ -16,3 +16,14 @@ This directory holds input data for Pixitie fonts from miscellaneous sources:
   generated Type 3 fonts.
 
 - consolefonts/ is extracted from the Debian console-data package, version 2:1.12-2.
+
+- DMP2000_Charset.png is an image of the font of the Amstrad/Schneider DMP2000
+  printer, downloaded from the CPC Wiki at
+  <http://www.cpcwiki.eu/imgs/f/f3/inputs/DMP2000_Charset.png>; see
+  <http://www.cpcwiki.eu/index.php/Amstrad/Schneider_Printer_Character_Sets>.
+
+- DMP3000_Charset.png is an image of three fonts (NLQ roman, NLQ italic, and
+  draft extra characters mostly for IBM PC users) of the Amstrad DMP3000
+  printer, downloaded from the CPC Wiki at
+  <http://www.cpcwiki.eu/imgs/8/80/inputs/DMP3000_Charset.png>; see
+  <http://www.cpcwiki.eu/index.php/Amstrad/Schneider_Printer_Character_Sets>.
