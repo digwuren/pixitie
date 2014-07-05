@@ -8,20 +8,6 @@ RESOURCES = ascii.cs \
   Bradford-Kazmiruk-O-Monospaced.pxf \
   Bradford-Kazmiruk-M-Monospaced.pxf \
   Bradford-Greek-Monospaced.pxf Bradford-Greek-Monospaced.cs \
-  Bradford-Extra-9-Monospaced.pxf \
-  Bradford-Extra-A-Monospaced.pxf \
-  Bradford-Extra-B-Monospaced.pxf \
-  Bradford-Extra-C-Monospaced.pxf \
-  Bradford-Extra-F-Monospaced.pxf \
-  Bradford-Extra-J-Monospaced.pxf \
-  Bradford-Extra-K-Monospaced.pxf \
-  Bradford-Extra-L-Monospaced.pxf \
-  Bradford-Extra-M-Monospaced.pxf \
-  Bradford-Extra-N-Monospaced.pxf \
-  Bradford-Extra-O-Monospaced.pxf \
-  Bradford-Extra-P-Monospaced.pxf \
-  Bradford-Extra-S-Monospaced.pxf \
-  Bradford-Extra-T-Monospaced.pxf \
   ZXSpectrum-Chargen.pxf zx-spectrum.cs ZXSpectrum-Chargen.8x8.hex \
   dmp3000-extra.cs \
   NLQ401.cs NLQ401-Draft.cs NLQ401-Draft-Extra.cs \
@@ -539,12 +525,25 @@ inputs/glyphlist.txt:
 #### Overview generation rules
 
 # TODO: OVERVIEWED_FONTS should eventually list all included fonts, and then be renamed accordingly
-OVERVIEWED_FONTS = $(BRADFORD_ORIGINAL_FONTS) $(AMSTRAD_FONTS) $(MONOBOOK_FONTS) $(7SEG_FONTS) $(OLD_HYLIAN_FONTS)
+OVERVIEWED_FONTS = $(BRADFORD_ORIGINAL_FONTS) $(BRADFORD_EXTRA_FONTS) \
+                   $(AMSTRAD_FONTS) \
+                   $(MONOBOOK_FONTS) \
+                   $(7SEG_FONTS) \
+                   $(OLD_HYLIAN_FONTS)
 
 BRADFORD_ORIGINAL_FONTS = Bradford-1-Monospaced Bradford-2-Monospaced \
                           Bradford-3-Monospaced Bradford-4-Monospaced \
                           Bradford-5-Monospaced Bradford-6-Monospaced \
                           Bradford-7-Monospaced Bradford-8-Monospaced
+
+BRADFORD_EXTRA_FONTS = Bradford-Extra-9-Monospaced Bradford-Extra-A-Monospaced \
+                       Bradford-Extra-B-Monospaced Bradford-Extra-C-Monospaced \
+                       Bradford-Extra-F-Monospaced Bradford-Extra-J-Monospaced \
+                       Bradford-Extra-K-Monospaced Bradford-Extra-L-Monospaced \
+                       Bradford-Extra-M-Monospaced Bradford-Extra-N-Monospaced \
+                       Bradford-Extra-O-Monospaced Bradford-Extra-P-Monospaced \
+                       Bradford-Extra-S-Monospaced Bradford-Extra-T-Monospaced
+
 AMSTRAD_FONTS = DMP2000 \
                 DMP3000-NLQ DMP3000-NLQ-Italic DMP3000-NLQ-Extra DMP3000-Draft-Extra \
                 DMP3160-NLQ DMP3160-NLQ-Italic DMP3160-Draft DMP3160-Draft-Italic \
@@ -567,7 +566,8 @@ overviews/NLQ401.ps: NLQ401.cs
 overviews/NLQ401-Draft.ps: NLQ401-Draft.cs
 overviews/NLQ401-Draft-Extra.ps: NLQ401-Draft-Extra.cs
 
-$(foreach font, $(BRADFORD_ORIGINAL_FONTS), overviews/$(font).ps): bradford.cs
+$(foreach font, $(BRADFORD_ORIGINAL_FONTS) $(BRADFORD_EXTRA_FONTS), \
+    overviews/$(font).ps): bradford.cs ascii.cs
 $(foreach font, $(MONOBOOK_FONTS), overviews/$(font).ps): monobook.cs
 $(foreach font, $(7SEG_FONTS), overviews/$(font).ps): 7seg.cs
 $(foreach font, $(OLD_HYLIAN_FONTS), overviews/$(font).ps): old-hylian.cs
