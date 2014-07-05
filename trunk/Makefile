@@ -29,14 +29,9 @@ RESOURCES = ascii.cs \
   ZXSpectrum-Chargen.pxf zx-spectrum.cs ZXSpectrum-Chargen.8x8.hex \
   dmp3000-extra.cs \
   NLQ401.cs NLQ401-Draft.cs NLQ401-Draft-Extra.cs \
-  $(foreach font, $(AMSTRAD_FONTS), $(font).pxf) \
   7seg.cs \
-  7seg-Boxy-Draft.pxf 7seg-Boxy-Narrowed-Draft.pxf \
-  7seg-Boxy-NLQ.pxf 7seg-Boxy-NLQ-Rounded.pxf 7seg-Boxy-Narrowed-NLQ.pxf 7seg-Boxy-Narrowed-NLQ-Rounded.pxf \
-  7seg-Mini-Draft.pxf \
   abridged-unicode.txt \
   old-hylian.cs \
-  Old-Hylian-Draft.pxf Old-Hylian-NLQ.pxf Old-Hylian-NLQ-Elite.pxf Old-Hylian-NLQ-Dense.pxf \
   braille.cs \
   Braille-Draft.pxf \
   taiogeuna.cs \
@@ -47,7 +42,7 @@ RESOURCES = ascii.cs \
   Gohufont-Uni-11.pxf Gohufont-Uni-11-Bold.pxf Gohufont-Uni-14.pxf Gohufont-Uni-14-Bold.pxf \
   Default8x16.cs Default8x16.pxf \
   monobook.cs \
-  $(foreach font, $(MONOBOOK_FONTS), $(font).pxf) \
+  $(foreach font, $(OVERVIEWED_FONTS), $(font).pxf) \
   inputs/glyphlist.txt
 
 pixitie: pixitie-code.rb $(RESOURCES)
@@ -547,6 +542,7 @@ inputs/glyphlist.txt:
 
 #### Overview generation rules
 
+# TODO: OVERVIEWED_FONTS should eventually list all included fonts, and then be renamed accordingly
 OVERVIEWED_FONTS = $(AMSTRAD_FONTS) $(MONOBOOK_FONTS) $(7SEG_FONTS) $(OLD_HYLIAN_FONTS)
 
 AMSTRAD_FONTS = DMP2000 \
