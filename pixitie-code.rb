@@ -306,8 +306,14 @@ EOU
       @encoding = {} # unicode-value => native-charcode
       @decoding = {} # native-charcode => unicode-value
       @natives = Set::new
+      @includees = []
+          # list of directly or indirectly included other charsets.
+          # Filled in by Charset#parse; used for the dependency column
+          # of --list-font-charsets.
       return
     end
+
+    attr_reader :includees
 
     def Charset::load resname
       charset = Charset::new
@@ -491,6 +497,7 @@ EOU
               end
             end
             if nesting_countdown > 0 then
+              @includees.push resname
               parse resname, exceptions + parsed_newexc,
                   nesting_countdown - 1
             else
@@ -2541,6 +2548,7 @@ EOU
         ['--obey-form-feed', GetoptLong::NO_ARGUMENT],
         ['--list-builtins', GetoptLong::NO_ARGUMENT],
         ['--list-fonts', GetoptLong::NO_ARGUMENT],
+        ['--list-font-charsets', GetoptLong::NO_ARGUMENT],
         ['--help', '-h', GetoptLong::NO_ARGUMENT],
         ['--version', GetoptLong::NO_ARGUMENT]
       ).each do |opt, arg|
@@ -2558,6 +2566,7 @@ EOU
         when '--obey-form-feed' then $obey_form_feed = true
         when '--list-builtins' then mode = method :main_list_builtins
         when '--list-fonts' then mode = method :main_list_fonts
+        when '--list-font-charsets' then mode = method :main_list_font_charsets
         when '--help' then print USAGE; exit
         when '--version' then puts IDENT; exit
         else raise "Unknown option #{opt}"
@@ -2610,6 +2619,18 @@ EOU
     printf "Total of %i litter(s) with %i variant(s).\n",
         litter_count, variant_count
     puts
+    return
+  end
+
+  def Pixitie::main_list_font_charsets
+    RES.list.each do |name|
+      next unless name =~ /\.pxf\Z/i
+      font_name = $`
+      litter = Pixel_Font_Litter::new font_name
+      puts "%s: %s" % [font_name,
+          [litter.charset_filename,
+              *litter.charset.includees].join(' ')]
+    end
     return
   end
 
