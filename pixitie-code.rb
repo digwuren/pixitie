@@ -1,4 +1,5 @@
 #! /usr/bin/ruby
+# encoding: UTF-8
 
 # vim: sw=2 tw=70
 
@@ -2764,6 +2765,8 @@ EOU
       [
         'the quick brown fox jumped over the lazy dog',
         'THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG',
+        'широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства',
+        'ШИРОКАЯ ЭЛЕКТРИФИКАЦИЯ ЮЖНЫХ ГУБЕРНИЙ ДАСТ МОЩНЫЙ ТОЛЧОК ПОДЪЁМУ СЕЛЬСКОГО ХОЗЯЙСТВА',
         '0123456789',
       ].each do |pangram|
         next unless pangram.unpack('U*').all?{ |uc|
