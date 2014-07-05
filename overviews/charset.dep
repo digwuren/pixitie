@@ -47,6 +47,7 @@ overviews/DMP3160-Draft.ps: epson-fx80.cs ascii.cs
 overviews/DMP3160-NLQ-Italic.ps: epson-fx80.cs ascii.cs
 overviews/DMP3160-NLQ.ps: epson-fx80.cs ascii.cs
 overviews/Default8x16.ps: Default8x16.cs
+overviews/Default8x9.ps: Default8x9.cs
 overviews/EpsonFX80-Italic.ps: epson-fx80.cs ascii.cs
 overviews/EpsonFX80.ps: epson-fx80.cs ascii.cs
 overviews/Gohufont-11-Bold.ps: latin1.cs ascii.cs
@@ -57,6 +58,7 @@ overviews/Gohufont-Uni-11-Bold.ps: Gohufont-Uni-11.cs latin1.cs ascii.cs
 overviews/Gohufont-Uni-11.ps: Gohufont-Uni-11.cs latin1.cs ascii.cs
 overviews/Gohufont-Uni-14-Bold.ps: Gohufont-Uni-14.cs
 overviews/Gohufont-Uni-14.ps: Gohufont-Uni-14.cs
+overviews/Lat1-08.ps: Lat1-08.cs
 overviews/Monobook-12.ps: monobook.cs
 overviews/Monobook-16-Bold.ps: monobook.cs
 overviews/Monobook-16.ps: monobook.cs

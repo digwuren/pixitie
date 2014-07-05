@@ -14,7 +14,7 @@ RESOURCES = ascii.cs \
   taiogeuna.cs \
   latin1.cs \
   Gohufont-Uni-11.cs Gohufont-Uni-14.cs \
-  Default8x9.cs Default8x16.cs \
+  Default8x9.cs Default8x16.cs Lat1-08.cs \
   monobook.cs \
   $(foreach font, $(OVERVIEWED_FONTS), $(font).pxf) \
   inputs/glyphlist.txt
@@ -514,6 +514,11 @@ Default8x9.pxf Default8x9.cs: inputs/consolefonts/default8x9.psf.gz psf2pxf.rb
         -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
         > Default8x9.pxf
 
+Lat1-08.pxf Lat1-08.cs: inputs/consolefonts/lat1-08.psf.gz psf2pxf.rb
+	./psf2pxf.rb $< --output-charset Lat1-08.cs \
+        -h 'variant-bit Printerified aspect-ratio 6:5, horizontal-compression 1/2, circular-dots, /pad 1' \
+        > Lat1-08.pxf
+
 #### Download rules
 
 inputs/glyphlist.txt:
@@ -552,6 +557,7 @@ OVERVIEWED_FONTS = \
     \
     Default8x9 \
     Default8x16 \
+    Lat1-08 \
     \
     Gohufont-11 Gohufont-11-Bold Gohufont-14 Gohufont-14-Bold \
     Gohufont-Uni-11 Gohufont-Uni-11-Bold Gohufont-Uni-14 Gohufont-Uni-14-Bold \
