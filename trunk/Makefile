@@ -552,20 +552,30 @@ inputs/glyphlist.txt:
 
 #### Overview generation rules
 
-overviews: overviews/Old-Hylian-Draft.pdf
 .PHONY: overviews
+OLD_HYLIAN_FONTS = Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hylian-NLQ-Dense
 
-overviews/Old-Hylian-Draft.ps: Old-Hylian-Draft.pxf old-hylian.cs
+overviews: $(foreach font, \
+    $(OLD_HYLIAN_FONTS), \
+    overviews/$(font).pdf)
+
+$(foreach font, $(OLD_HYLIAN_FONTS), overviews/$(font).ps): old-hylian.cs
+
+## The generation templates
+
+overviews/%.ps: %.pxf
         # We'll pass -R. to Pixitie even though it already has the font.  This
         # is to ensure that it uses the external, not the embedded version of
         # relevant resources.  (Recall that external resources take precedence
         # over internal ones.)
-	./pixitie -R. --showcase Old-Hylian-Draft > $@
+	./pixitie -R. --showcase $(basename $<) > $@
 
-overviews/Old-Hylian-Draft.pdf: overviews/Old-Hylian-Draft.ps
+
+overviews/%.pdf: overviews/%.ps
         # Apple's pstopdf is often, but not always, able to perform the
         # conversion.  It particularly seems to have trouble with fonts larger
         # than 255 (sic) glyphs.
         #
         # We'll rely on GhostScript's ps2pdf, which is more reliable.
 	ps2pdf $< $@
+
