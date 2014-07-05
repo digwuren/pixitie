@@ -131,7 +131,9 @@ open_possibly_gzipped ARGV[0] do |port|
     raise 'not a PSF v1 file'
   end
   if mode & 0x01 != 0 then
-    raise 'PSF1_MODE512 is not supported'
+    char_count = 512
+  else
+    char_count = 256
   end
   if mode & 0x02 != 0 and $charset_output_filename.nil? then
     raise 'the font has PSF1_MODEHASTAB set but --output-charset was not used'
@@ -140,7 +142,7 @@ open_possibly_gzipped ARGV[0] do |port|
     raise 'PSF1_MODEHASSEQ is not supported'
   end
   i = 4
-  (0 ... 256).each do |charcode|
+  (0 ... char_count).each do |charcode|
     rows = data.byteslice(i, charsize).unpack('C*').map{|row| [row].pack('C').unpack('B*').first}
     # The rows array now holds String:s of bits.
     raise "Broken data" unless rows.length == charsize
@@ -189,14 +191,14 @@ open_possibly_gzipped ARGV[0] do |port|
       if mode & 0x02 != 0 then
         emitter = Charset_Emitter.new csport
         unicode_table = data.unpack("@#{i} S<*")
-        (0 ... 256).each do |charcode|
+        (0 ... char_count).each do |charcode|
           term = unicode_table.index(0xFFFF)
           raise "Broken data" unless term
           char_data = unicode_table[0 ... term]
           unicode_table[0 .. term] = []
           # discard multi-codepoint entries
           char_data[(char_data.index(0xFFFE) || char_data.length) .. -1] = []
-          emitter.emit charcode, *char_data
+          emitter.emit charcode, *char_data unless char_data.empty?
         end
         emitter.flush
       end
