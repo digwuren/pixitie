@@ -134,10 +134,10 @@ Bradford-8-Monospaced.pxf: options := -b2
 
 # NLQ401 fonts
 
-NLQ401_Charset.png:
-	wget 'http://www.cpcwiki.eu/imgs/a/a1/NLQ401_Charset.png'
+inputs/NLQ401_Charset.png:
+	wget 'http://www.cpcwiki.eu/imgs/a/a1/NLQ401_Charset.png' -O $@
 
-NLQ401.pxf: NLQ401_Charset.png picture2pxf.rb
+NLQ401.pxf: inputs/NLQ401_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,15 \
           --skew=8 \
@@ -157,7 +157,7 @@ NLQ401.pxf: NLQ401_Charset.png picture2pxf.rb
           -h 'baseline 7' \
           $< > $@
 
-NLQ401-Draft.pxf: NLQ401_Charset.png picture2pxf.rb
+NLQ401-Draft.pxf: inputs/NLQ401_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,530 \
           --skew=8 \
@@ -177,7 +177,7 @@ NLQ401-Draft.pxf: NLQ401_Charset.png picture2pxf.rb
           -h 'baseline 5' \
           $< > $@
 
-NLQ401-Draft-Extra.pxf: NLQ401_Charset.png picture2pxf.rb
+NLQ401-Draft-Extra.pxf: inputs/NLQ401_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,985 \
           --range=0x80..0xFF \
