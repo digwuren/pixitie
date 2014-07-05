@@ -300,10 +300,10 @@ DMP3000-Draft-Extra.pxf: inputs/DMP3000_Charset.png picture2pxf.rb
           $< > $@
 
 # DMP3160 fonts
-DMP3160_Charset.png:
-	wget 'http://www.cpcwiki.eu/imgs/a/a6/DMP3160_Charset.png'
+inputs/DMP3160_Charset.png:
+	wget 'http://www.cpcwiki.eu/imgs/a/a6/DMP3160_Charset.png' -O $@
 
-DMP3160-NLQ.pxf: DMP3160_Charset.png picture2pxf.rb
+DMP3160-NLQ.pxf: inputs/DMP3160_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,17 \
           --range=0x00..0x7F \
@@ -323,7 +323,7 @@ DMP3160-NLQ.pxf: DMP3160_Charset.png picture2pxf.rb
           -h 'variant-bit Underscored /columns |4' \
           $< > $@
 
-DMP3160-NLQ-Italic.pxf: DMP3160_Charset.png picture2pxf.rb
+DMP3160-NLQ-Italic.pxf: inputs/DMP3160_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=12,537 \
           --range=0x00..0x7F \
@@ -343,7 +343,7 @@ DMP3160-NLQ-Italic.pxf: DMP3160_Charset.png picture2pxf.rb
           -h 'variant-bit Underscored /columns |4' \
           $< > $@
 
-DMP3160-Draft.pxf: DMP3160_Charset.png picture2pxf.rb
+DMP3160-Draft.pxf: inputs/DMP3160_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=912,17 \
           --range=0x00..0x7F \
@@ -363,7 +363,7 @@ DMP3160-Draft.pxf: DMP3160_Charset.png picture2pxf.rb
           -h 'variant-bit Underscored /columns |8 : &~8' \
           $< > $@
 
-DMP3160-Draft-Italic.pxf: DMP3160_Charset.png picture2pxf.rb
+DMP3160-Draft-Italic.pxf: inputs/DMP3160_Charset.png picture2pxf.rb
 	./picture2pxf.rb \
           --origin=912,537 \
           --range=0x00..0x7F \
