@@ -353,6 +353,24 @@ EOU
 
     ## Other utilities
 
+    GLYPH_NAMES = Object.new
+    class << GLYPH_NAMES
+      def [] unicode
+        unless @data then
+          @data = {}
+          RES['glyphlist.txt'].each_line do |line|
+            line.rstrip!
+            next if line.empty? or line =~ /^#/
+            name, code = line.split /;/
+            next unless code.length == 4
+            code = code.hex
+            @data[code] = name unless @data[code]
+          end
+        end
+        return @data[unicode]
+      end
+    end
+
     # Construct and return a suitable PostScript charname for the
     # given native charcode.  If this code resolves into a Unicode
     # value and back, this will be a standard Unicode-based name for
@@ -364,9 +382,9 @@ EOU
     # meaning for PDF tools.
     def ps_charname nc
       if decode(nc) and encode(decode(nc)) == nc then
-        return sprintf 'uni%04X', decode(nc)
+        return GLYPH_NAMES[decode nc] || ('uni%04X' % decode(nc))
       else
-        return sprintf 'chr%02X', nc
+        return 'chr%02X' % nc
       end
     end
 
