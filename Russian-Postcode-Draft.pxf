@@ -1,0 +1,25 @@
+# Digits shaped like Russian postcode digits.  Draft mode; unusually tall in
+# order for both of the 'squares' to be square-y.
+
+# Probably not useful for machine reading, both for the size difference from
+# prescribed digits and possibly also the draftness.
+
+aspect-ratio 6:5
+circular-dots
+baseline 5
+
+charset Russian-Postcode.cs
+
+20 000 000 000 000 000 000
+30 FE0 820 820 FE0 000 000
+31 100 200 400 FE0 000 000
+32 820 860 8A0 F20 000 000
+33 920 B40 D80 900 000 000
+34 F00 100 100 FE0 000 000
+35 F20 920 920 9E0 000 000
+36 1E0 320 520 9E0 000 000
+37 9E0 A00 C00 800 000 000
+38 FE0 920 920 FE0 000 000
+39 F20 940 980 F00 000 000
+
+45 FE0 920 920 920 000 000
