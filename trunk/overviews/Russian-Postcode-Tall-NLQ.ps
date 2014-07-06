@@ -495,7 +495,7 @@ currentdict end
   /.notdef % 2A
   /.notdef % 2B
   /.notdef % 2C
-  /.notdef % 2D
+  /hyphen
   /.notdef % 2E
   /.notdef % 2F
   /zero
@@ -536,6 +536,8 @@ currentdict end
 /CharColumns 70 array def
 CharMetrics 16#20 {7.199999999999999 0 0 0 0 0} put
 CharColumns 16#20 <00 00 00 00 00 00 00 00 00 00 00 00> put
+CharMetrics 16#2d {7.199999999999999 0 0 4 6 5} put
+CharColumns 16#2d [2048 2048 2048 2048 2048 2048 2048 2048 2048 0 0 0] put
 CharMetrics 16#30 {7.199999999999999 0 0 0 6 9} put
 CharColumns 16#30 [1048568 524296 524296 524296 524296 524296 524296 524296 1048568 0 0 0] put
 CharMetrics 16#31 {7.199999999999999 0 0 0 6 9} put
@@ -634,7 +636,7 @@ currentdict end
 7.199999999999999 0 rmoveto
 7.199999999999999 0 rmoveto
 7.199999999999999 0 rmoveto
-7.199999999999999 0 rmoveto
+(-) show
 7.199999999999999 0 rmoveto
 7.199999999999999 0 rmoveto
 7.199999999999999 0 rmoveto
@@ -723,6 +725,12 @@ currentdict end
 /EpsonFX80 10 selectfont
 ( U+0020 SPACE) show
 -129.600000 -12.000000 rmoveto
+($2D ) show
+/Russian-Postcode-Tall-NLQ 10 selectfont
+(-) show
+/EpsonFX80 10 selectfont
+( U+002D HYPHEN-MINUS) show
+-180.000000 -12.000000 rmoveto
 ($30 ) show
 /Russian-Postcode-Tall-NLQ 10 selectfont
 (0) show
