@@ -92,26 +92,31 @@ charset 14seg.cs
 .compose 5E: mid-southwest mid-southeast
 .compose 5F: south
 .compose 60: mid-northwest
-.compose 61: south west.bottom mid-west mid-south
-.compose 62: south west mid-west mid-southeast
+.compose 61: north east south west.bottom hyphen
+.compose 62: west south east.bottom hyphen
 .compose 63: south west.bottom hyphen
-.compose 64: east south mid-east mid-southwest
-.compose 65: south west.bottom mid-west mid-southwest
+.compose 64: east south west.bottom hyphen
+.compose 65: north west east.bottom hyphen south
+.compose 66: hyphen mid-northeast mid-south
 .compose 67: north east.top south west.top hyphen mid-southeast
 .compose 68: east.bottom west hyphen
 .compose 69: mid-south
 .compose 6A: east.bottom south
+.compose 6B: mid-north mid-south mid-northeast mid-southeast
+.compose 6C: mid-north mid-south south
 .compose 6D: east.bottom west.bottom hyphen mid-south
 .compose 6E: west.bottom mid-west mid-southeast
 .compose 6F: east.bottom south west.bottom hyphen
 .compose 70: north west mid-west mid-northeast
 .compose 71: north east mid-northwest mid-east
-.compose 72: mid-south mid-east
+.compose 72: hyphen west.bottom
+.compose 73: mid-east mid-southeast south
 .compose 74: south west mid-west
 .compose 75: east.bottom south west.bottom
 .compose 76: west.bottom mid-southwest
 .compose 77: east.bottom west.bottom mid-southwest mid-southeast
 .compose 79: west.top hyphen east south
+.compose 7A: mid-west mid-southwest south
 .compose 7B: north south mid-northwest mid-west mid-southwest
 .compose 7C: mid-north mid-south
 .compose 7D: north south mid-northeast mid-east mid-southeast
@@ -122,6 +127,7 @@ charset 14seg.cs
 .compose 81: east hyphen
 .compose 82: east south
 .compose 83: north south west.bottom east.bottom
+.compose 84: west.bottom south east.bottom mid-east
 .compose 85: north south hyphen
 .compose 86: east south west hyphen
 .compose 87: north east.bottom west.bottom
