@@ -2610,6 +2610,7 @@ EOU
       $obey_form_feed = false
       $escp = false
       $ansi = false
+      $ignore_invalid_escapes = false
       mode = method :main_vprinter
 
       GetoptLong::new(
@@ -2625,6 +2626,7 @@ EOU
         ['--obey-form-feed', GetoptLong::NO_ARGUMENT],
         ['--escp', '--esc-p', GetoptLong::NO_ARGUMENT],
         ['--ansi', GetoptLong::NO_ARGUMENT],
+        ['--ignore-invalid-escapes', GetoptLong::NO_ARGUMENT],
         ['--list-builtins', GetoptLong::NO_ARGUMENT],
         ['--list-fonts', GetoptLong::NO_ARGUMENT],
         ['--list-font-charsets', GetoptLong::NO_ARGUMENT],
@@ -2645,6 +2647,7 @@ EOU
         when '--obey-form-feed' then $obey_form_feed = true
         when '--escp' then $escp = true
         when '--ansi' then $ansi = true
+        when '--ignore-invalid-escapes' then $ignore_invalid_escapes = true
         when '--list-builtins' then mode = method :main_list_builtins
         when '--list-fonts' then mode = method :main_list_fonts
         when '--list-font-charsets' then
@@ -2778,21 +2781,38 @@ EOU
             elsif c == 0x001B and line[i] == 0x005B and $ansi then
               # We've got a CSI.  Let's get the whole sequence.
               j = i + 1
+              invalid = false
               loop do
                 if j >= line.length then
-                  raise 'Broken ANSI escape sequence'
+                  if $ignore_invalid_escapes then
+                    invalid = true
+                    break
+                  else
+                    raise 'Broken ANSI escape sequence'
+                  end
                 end
                 break if (0x40 .. 0x7E).include? line[j] 
                 unless (0x20 .. 0x3F).include? line[j] then
-                  raise 'Invalid ANSI escape sequence'
+                  if $ignore_invalid_escapes then
+                    invalid = true
+                    break
+                  else
+                    raise 'Invalid ANSI escape sequence'
+                  end
                 end
                 j += 1
+              end
+              if invalid then
+                i = j + 1
+                next
               end
               sequence = line[i + 1 .. j].pack('U*')
               if sequence[-1] == ?m then
                 unless sequence =~ /^\d+(;\d+)*m$/ then
-                  raise "Unknown ANSI SGR sequence %s" %
-                      sequence.inspect
+                  unless $ignore_invalid_escapes then
+                    raise "Unknown ANSI SGR sequence %s" %
+                        sequence.inspect
+                  end
                 end
                 sequence[0 ... -1].split(';').each do |n|
                   n = n.to_i
@@ -2826,13 +2846,17 @@ EOU
                     $ts.switch_rgb *ansi_palette[ansi_colour +
                         (ansi_intense ? 8 : 0)].map{|c| c / 255.0}
                   else
-                    raise 'Unknown or unsupported ANSI SGR code %i' %
-                        n
+                    unless $ignore_invalid_escapes then
+                      raise 'Unknown or unsupported ANSI SGR code %i' %
+                          n
+                    end
                   end
                 end
               else
-                raise "Unknown ANSI escape sequence %s"
-                    line[i - 1 .. j].inspect
+                unless $ignore_invalid_escapes then
+                  raise "Unknown ANSI escape sequence %s"
+                      line[i - 1 .. j].inspect
+                end
               end
               i = j + 1
             else
