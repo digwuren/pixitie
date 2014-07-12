@@ -2233,6 +2233,14 @@ EOU
               (@font_neighbourhood[bold] ||= {})[:'+bold'] = bold
               (@font_neighbourhood[unbold] ||= {})[:'-bold'] = unbold
             end
+            litter.each_font_variant_pair 'Underscored' do
+                |plain, underscored|
+              (@font_neighbourhood[plain] ||= {})[:'+underscore'] = underscored
+              (@font_neighbourhood[underscored] ||= {})[:'-underscore'] = plain
+
+              (@font_neighbourhood[underscored] ||= {})[:'+underscore'] = underscored
+              (@font_neighbourhood[plain] ||= {})[:'-underscore'] = plain
+            end
             @known_font_litters.add litter.name
           end
         elsif RES.have? font_name + '.afm' then
@@ -2759,7 +2767,7 @@ EOU
           while i < line.length do
             c = line[i]
             i += 1
-            if c == 0x000C and $obey_form_feed then
+            if c == 0x000C and ($obey_form_feed or $escp) then
               $ts.form_feed
             elsif c == 0x001B and line[i] == 0x0045 and $escp then
               $ts.font_transition :'+bold'
@@ -2793,8 +2801,8 @@ EOU
                     ansi_intense = false
                     ansi_colour = nil
                     $ts.switch_grey 0
-                    # FIXME: also switch to the plain font
                     $ts.font_transition :'-bold'
+                    $ts.font_transition :'-underscore'
                   when 1 then
                     ansi_intense = true
                     if ansi_colour then
@@ -2804,6 +2812,10 @@ EOU
                       # intense of unspecified colour is bold
                       $ts.font_transition :'+bold'
                     end
+                  when 4 then
+                    $ts.font_transition :'+underscore'
+                  when 24 then
+                    $ts.font_transition :'-underscore'
                   when 31 .. 37 then
                     # If we turned bold on because we were doing
                     # intense unspecified colour, turn it off again.
