@@ -1,0 +1,67 @@
+Supported escape sequences
+==========================
+
+Note that --escp, --ansi, and --obey-form-feed are not exclusive.
+
+--obey-form-feed
+----------------
+
+(Note that --escp implies --obey-form-feed.)
+
+FF
+  page break
+
+
+ESC/P (--escp)
+--------------
+
+ESC E  
+  turn bold on
+
+ESC F
+  turn bold off
+
+
+ANSI aka ECMA-48 (--ansi)
+-------------------------
+
+(Note that the miscellaneous ESC [ ... m sequences can be combined by
+semicolons.)
+
+ESC [ 0 m
+  switch to black colour, turn off bold, underscoring, and intensity
+
+ESC [ 1 m
+  turn on intensity.  If a foreground colour has been selected, this modifies
+  its meaning towards higher brightness, otherwise this selects a bold font
+  variant.
+
+ESC [ 4 m
+  turn on underscoring
+
+ESC [ 24 m
+  turn off underscoring
+
+ESC [ 30 m
+  switch to black colour (or dark grey if intensity is on)
+
+ESC [ 31 m
+  switch to red colour, possibly brightened by the intensity flag
+
+ESC [ 32 m
+  switch to red colour, possibly brightened by the intensity flag
+
+ESC [ 33 m
+  switch to brown colour (or yellow if intensity is on)
+
+ESC [ 34 m
+  switch to blue colour, possibly brightened by the intensity flag
+
+ESC [ 35 m
+  switch to magenta colour, possibly brightened by the intensity flag
+
+ESC [ 36 m
+  switch to cyan colour, possibly brightened by the intensity flag
+
+ESC [ 37 m
+  switch to grey colour (or white if intensity is on)
