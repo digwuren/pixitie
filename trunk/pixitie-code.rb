@@ -34,6 +34,7 @@ font.
                           the current directory as standalone files
       --obey-form-feed    break page at the FF (U+000C, ^L) char
       --escp              support (a subset of) ESC/P escape sequences
+      --ansi              support (a subset of) ANSI escape sequences
       --list-builtins     list the builtin resources
       --list-fonts        list available fonts
   -h, --help              brief usage summary
@@ -2600,6 +2601,7 @@ EOU
       $min_line_spacing = nil
       $obey_form_feed = false
       $escp = false
+      $ansi = false
       mode = method :main_vprinter
 
       GetoptLong::new(
@@ -2614,6 +2616,7 @@ EOU
         ['--extract', '-x', GetoptLong::NO_ARGUMENT],
         ['--obey-form-feed', GetoptLong::NO_ARGUMENT],
         ['--escp', '--esc-p', GetoptLong::NO_ARGUMENT],
+        ['--ansi', GetoptLong::NO_ARGUMENT],
         ['--list-builtins', GetoptLong::NO_ARGUMENT],
         ['--list-fonts', GetoptLong::NO_ARGUMENT],
         ['--list-font-charsets', GetoptLong::NO_ARGUMENT],
@@ -2633,6 +2636,7 @@ EOU
         when '--extract' then mode = method :main_extract_builtins
         when '--obey-form-feed' then $obey_form_feed = true
         when '--escp' then $escp = true
+        when '--ansi' then $ansi = true
         when '--list-builtins' then mode = method :main_list_builtins
         when '--list-fonts' then mode = method :main_list_fonts
         when '--list-font-charsets' then
@@ -2727,6 +2731,26 @@ EOU
         end
       end
 
+      ansi_intense = false # used to interpret ANSI colour sequences
+      ansi_colour = nil # ditto
+      ansi_palette = {
+        0 => [0, 0, 0],
+        1 => [194, 54, 33],
+        2 => [37, 188, 36],
+        3 => [173, 173, 39],
+        4 => [73, 46, 225],
+        5 => [211, 56, 211],
+        6 => [51, 187, 200],
+        7 => [203, 204, 205],
+        0 + 8 => [129, 131, 131],
+        1 + 8 => [252, 57, 31],
+        2 + 8 => [49, 231, 34],
+        3 + 8 => [234, 236, 35],
+        4 + 8 => [88, 51, 255],
+        5 + 8 => [249, 53, 248],
+        6 + 8 => [20, 240, 240],
+        7 + 8 => [233, 235, 235],
+      }
       open_input.call filename do |port|
         port.each_line do |line|
           line.chomp!
@@ -2743,6 +2767,62 @@ EOU
             elsif c == 0x001B and line[i] == 0x0046 and $escp then
               $ts.font_transition :'-bold'
               i += 1
+            elsif c == 0x001B and line[i] == 0x005B and $ansi then
+              # We've got a CSI.  Let's get the whole sequence.
+              j = i + 1
+              loop do
+                if j >= line.length then
+                  raise 'Broken ANSI escape sequence'
+                end
+                break if (0x40 .. 0x7E).include? line[j] 
+                unless (0x20 .. 0x3F).include? line[j] then
+                  raise 'Invalid ANSI escape sequence'
+                end
+                j += 1
+              end
+              sequence = line[i + 1 .. j].pack('U*')
+              if sequence[-1] == ?m then
+                unless sequence =~ /^\d+(;\d+)*m$/ then
+                  raise "Unknown ANSI SGR sequence %s" %
+                      sequence.inspect
+                end
+                sequence[0 ... -1].split(';').each do |n|
+                  n = n.to_i
+                  case n
+                  when 0 then
+                    ansi_intense = false
+                    ansi_colour = nil
+                    $ts.switch_grey 0
+                    # FIXME: also switch to the plain font
+                    $ts.font_transition :'-bold'
+                  when 1 then
+                    ansi_intense = true
+                    if ansi_colour then
+                      $ts.switch_rgb *ansi_palette[ansi_colour +
+                          (ansi_intense ? 8 : 0)].map{|c| c / 255.0}
+                    else
+                      # intense of unspecified colour is bold
+                      $ts.font_transition :'+bold'
+                    end
+                  when 31 .. 37 then
+                    # If we turned bold on because we were doing
+                    # intense unspecified colour, turn it off again.
+                    if ansi_intense and ansi_colour.nil? then
+                      $ts.font_transition :'-bold'
+                    end
+                    ansi_colour = n - 30
+                    $ts.switch_rgb *ansi_palette[ansi_colour +
+                        (ansi_intense ? 8 : 0)].map{|c| c / 255.0}
+                  else
+                    raise 'Unknown or unsupported ANSI SGR code %i' %
+                        n
+                  end
+                end
+              else
+                raise "Unknown ANSI escape sequence %s"
+                    line[i - 1 .. j].inspect
+              end
+              i = j + 1
             else
               $ts.typeset_unicode_char c
             end
