@@ -35,6 +35,7 @@ sub max (@) {
 my $curchar;
 while (<>) {
   chomp;
+  s/\s*$//;
   next if m/^(STARTFONT|FONT|SIZE|FONTBOUNDINGBOX|CHARS|STARTCHAR|SWIDTH|COMMENT)\b/;
   last if m/^ENDFONT$/;
   if (m/^STARTPROPERTIES\b/) {
@@ -86,7 +87,7 @@ while (<>) {
     $pixels_below_baseline = max $pixels_below_baseline, - $curchar->{BBX}->{BOTTOM};
     undef $curchar;
   } else {
-    die "parse error";
+    die "parse error near \"$_\"";
   }
 }
 
