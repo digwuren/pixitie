@@ -33,6 +33,7 @@ font.
   -x, --extract           extract the specified builtin resources into
                           the current directory as standalone files
       --obey-form-feed    break page at the FF (U+000C, ^L) char
+      --escp              support (a subset of) ESC/P escape sequences
       --list-builtins     list the builtin resources
       --list-fonts        list available fonts
   -h, --help              brief usage summary
@@ -1089,6 +1090,21 @@ EOU
       return true
     end
 
+    # Given a variant bit pattern, construct the font's canonical
+    # name.
+    def get_variant_font_name bit_pattern
+      unless variant_bit_pattern_valid? bit_pattern then
+        raise 'Invalid font variant requested'
+      end
+      variant_font_name = @name
+      @varbit_names.each_with_index do |bit_name, bit_index|
+        if bit_pattern[bit_index] == 1 then
+          variant_font_name += '.' + bit_name
+        end
+      end
+      return variant_font_name
+    end
+
     # Given a variant bit pattern, construct and return the font
     # variant it describes.
     def get_variant_font bit_pattern
@@ -1145,6 +1161,19 @@ EOU
 
       # we're done
       return font_variant
+    end
+
+    def each_font_variant_pair varbit_name
+      varbit_index = @varbit_names.index varbit_name
+      return unless varbit_index
+      (0 ... 1 << @varbit_names.length).each do |plain|
+        next unless plain[varbit_index] == 0
+        next unless variant_bit_pattern_valid? plain
+        modified = plain | (1 << varbit_index)
+        next unless variant_bit_pattern_valid? modified
+        yield get_variant_font_name(plain),
+            get_variant_font_name(modified)
+      end
     end
 
     # Return native charcodes of all glyphs contained in this font.
@@ -1956,6 +1985,7 @@ EOU
 
       pfv = Pixel_Font_Variant::load font_name
       @name = pfv.name
+      @litter = pfv.litter
 
       # Construct the PostScript code
       sport = StringIO::new
@@ -1985,6 +2015,10 @@ EOU
       end
 
       return
+    end
+
+    def get_litter
+      return @litter
     end
 
     def get_char_name code
@@ -2134,6 +2168,7 @@ EOU
     attr_reader :margin
     attr_reader :page_body_size
     attr_reader :typesetter
+    attr_reader :font_neighbourhood
 
     def initialize page_size_name = 'A4',
         margin = Pixitie::parse_length('15 mm')
@@ -2157,6 +2192,11 @@ EOU
       @pages = [] # [[page-name, postscript-code], ...]
       @font_load_order = []
       @font_programs = {}
+      @font_neighbourhood = {} # {name => {modif => name}}
+          # modif being :'+foo' or :'-foo'
+      @known_font_litters = Set.new
+          # names of litters whose neighbourhood data we've already
+          # got
 
       @typesetter = Typesetter::new(self)
 
@@ -2177,9 +2217,23 @@ EOU
       if @font_programs.has_key? font_name then
         return @font_programs[font_name]
       else
+        # Cache miss.  Load the font.
         if RES.have? font_name.split('.', -1).first + '.pxf' then
           # It's a pixel font.
           font_metadata = Pixitie::Pixel_Font_Program::new(font_name)
+          litter = font_metadata.get_litter
+          unless @known_font_litters.include?(
+              litter.name) then
+            litter.each_font_variant_pair 'Bold' do
+                |unbold, bold|
+              (@font_neighbourhood[unbold] ||= {})[:'+bold'] = bold
+              (@font_neighbourhood[bold] ||= {})[:'-bold'] = unbold
+
+              (@font_neighbourhood[bold] ||= {})[:'+bold'] = bold
+              (@font_neighbourhood[unbold] ||= {})[:'-bold'] = unbold
+            end
+            @known_font_litters.add litter.name
+          end
         elsif RES.have? font_name + '.afm' then
           font_metadata = Pixitie::AFM_Font_Program::new(font_name)
         else
@@ -2337,6 +2391,17 @@ EOU
         @curstate.font_program = new_font_program
         @curstate.font_size = size
       end
+      return
+    end
+
+    def font_transition transition
+      new_font_name = (@print_job.font_neighbourhood[
+          @curstate.font_program.name] || {})[transition]
+      unless new_font_name then
+        raise "Unable to apply transition %s to %s" %
+            [transition, @curstate.font_program.name]
+      end
+      switch_font new_font_name
       return
     end
 
@@ -2534,6 +2599,7 @@ EOU
       $margin = parse_length '15 mm'
       $min_line_spacing = nil
       $obey_form_feed = false
+      $escp = false
       mode = method :main_vprinter
 
       GetoptLong::new(
@@ -2547,6 +2613,7 @@ EOU
         ['--resources', '-R', GetoptLong::REQUIRED_ARGUMENT],
         ['--extract', '-x', GetoptLong::NO_ARGUMENT],
         ['--obey-form-feed', GetoptLong::NO_ARGUMENT],
+        ['--escp', '--esc-p', GetoptLong::NO_ARGUMENT],
         ['--list-builtins', GetoptLong::NO_ARGUMENT],
         ['--list-fonts', GetoptLong::NO_ARGUMENT],
         ['--list-font-charsets', GetoptLong::NO_ARGUMENT],
@@ -2565,9 +2632,11 @@ EOU
         when '--resources' then RES.dir = arg
         when '--extract' then mode = method :main_extract_builtins
         when '--obey-form-feed' then $obey_form_feed = true
+        when '--escp' then $escp = true
         when '--list-builtins' then mode = method :main_list_builtins
         when '--list-fonts' then mode = method :main_list_fonts
-        when '--list-font-charsets' then mode = method :main_list_font_charsets
+        when '--list-font-charsets' then
+          mode = method :main_list_font_charsets
         when '--help' then print USAGE; exit
         when '--version' then puts IDENT; exit
         else raise "Unknown option #{opt}"
@@ -2661,9 +2730,19 @@ EOU
       open_input.call filename do |port|
         port.each_line do |line|
           line.chomp!
-          line.unpack('U*').each do |c|
+          line = line.unpack('U*')
+          i = 0
+          while i < line.length do
+            c = line[i]
+            i += 1
             if c == 0x000C and $obey_form_feed then
               $ts.form_feed
+            elsif c == 0x001B and line[i] == 0x0045 and $escp then
+              $ts.font_transition :'+bold'
+              i += 1
+            elsif c == 0x001B and line[i] == 0x0046 and $escp then
+              $ts.font_transition :'-bold'
+              i += 1
             else
               $ts.typeset_unicode_char c
             end
@@ -2765,13 +2844,17 @@ EOU
       [
         'the quick brown fox jumped over the lazy dog',
         'THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG',
-        'широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства',
-        'ШИРОКАЯ ЭЛЕКТРИФИКАЦИЯ ЮЖНЫХ ГУБЕРНИЙ ДАСТ МОЩНЫЙ ТОЛЧОК ПОДЪЁМУ СЕЛЬСКОГО ХОЗЯЙСТВА',
+        'широкая электрификация южных губерний даст мощный толчок ' +
+            'подъёму сельского хозяйства',
+        'ШИРОКАЯ ЭЛЕКТРИФИКАЦИЯ ЮЖНЫХ ГУБЕРНИЙ ДАСТ МОЩНЫЙ ТОЛЧОК ' +
+            'ПОДЪЁМУ СЕЛЬСКОГО ХОЗЯЙСТВА',
         # Since Pixitie doesn't do BiDi, we'll compensate by
-        # printing the Hebrew pangram backwars.
+        # printing the Hebrew pangram backwards.
         'ךכ הצצש הדמחנ הרובח שגפ עתפל ךא ךז םיב ול טש ןרקס גד',
-        'ο καλύμνιος σφουγγαράς ψιθύρισε πως θα βουτήξει χωρίς να διστάζει',
-        'Ο ΚΑΛΎΜΝΙΟΣ ΣΦΟΥΓΓΑΡΆΣ ΨΙΘΎΡΙΣΕ ΠΩΣ ΘΑ ΒΟΥΤΉΞΕΙ ΧΩΡΊΣ ΝΑ ΔΙΣΤΆΖΕΙ',
+        'ο καλύμνιος σφουγγαράς ψιθύρισε πως θα βουτήξει χωρίς να ' +
+            'διστάζει',
+        'Ο ΚΑΛΎΜΝΙΟΣ ΣΦΟΥΓΓΑΡΆΣ ΨΙΘΎΡΙΣΕ ΠΩΣ ΘΑ ΒΟΥΤΉΞΕΙ ΧΩΡΊΣ ΝΑ ' +
+            'ΔΙΣΤΆΖΕΙ',
         '0123456789',
       ].each do |pangram|
         next unless pangram.unpack('U*').all?{ |uc|
