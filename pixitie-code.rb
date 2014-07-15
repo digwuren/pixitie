@@ -815,6 +815,31 @@ EOU
       end
     end
 
+    class Trim < Hex_Parametric_Manipulation
+      def initialize amount
+        super()
+        @amount = amount
+        return
+      end
+
+      def process_size_constraints width, height
+        return nil, height
+      end
+
+      def process_columns columns
+        first_nonblank = columns.index{|c| !c.zero?}
+        if first_nonblank then
+          last_nonblank = columns.rindex{|c| !c.zero?}
+          return Pixel_Glyph::new(
+              columns[first_nonblank ..  last_nonblank] +
+              [0] * @amount)
+        else
+          # Blank character -- no alteration
+          return Pixel_Glyph::new(columns)
+        end
+      end
+    end
+
     class Parameterless_Manipulation < Manipulation
       def self::parse name, args
         unless args.empty? then
@@ -978,6 +1003,7 @@ EOU
       '/simple-double-width' => Manipulation::Simple_Double_Width,
       '/columns' => Manipulation::Columns,
       '/pad' => Manipulation::Pad,
+      '/trim' => Manipulation::Trim,
     }.freeze
   end
 
