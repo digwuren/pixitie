@@ -112,13 +112,13 @@ NLQ401.pxf: inputs/NLQ401_Charset.png picture2pxf.rb
           --pad-bottom=2 \
           --pixel-step=1,3 \
           --cell-size=39,18 \
-          --pad-right=1 \
+          --pad-right=9 \
           --check-horizontal-neighbours \
           --cell-step=55,65 \
           -h 'charset NLQ401.cs' \
           -h '' \
-          -h 'aspect-ratio 18:25' \
-          -h 'horizontal-compression 1/4' \
+          -h 'aspect-ratio 6:5' \
+          -h 'horizontal-compression 1/8' \
           -h 'vertical-compression 1/2' \
           -h 'circular-dots' \
           -h 'baseline 7' \
