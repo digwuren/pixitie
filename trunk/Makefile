@@ -3,7 +3,7 @@ all: pixitie
 RESOURCES = ascii.cs \
   epson-fx80.cs epson-fx80-variants.pxfi \
   bradford.cs \
-  Bradford-Greek-Monospaced.cs \
+  Bradford-Greek.cs \
   zx-spectrum.cs ZXSpectrum-Chargen.8x8.hex \
   Atari-Graphic.cs \
   dmp3000-extra.cs \
@@ -38,7 +38,7 @@ pixitie: pixitie-code.rb $(RESOURCES)
 	./i8hex-encode.rb < $< > $@
 
 clean:
-	rm -vf Bradford-?-Monospaced.pxf
+	rm -vf Bradford-*.pxf
 	rm -vf ZXSpectrum-Chargen.8x8.hex
 	rm -vf NLQ401.pxf
 	rm -vf NLQ401-Draft.pxf
@@ -90,14 +90,14 @@ Bradford-7.brad: bradford.arc
 Bradford-8.brad: bradford.arc
 	arc p $< ${origname} > $@
 
-Bradford-1-Monospaced.pxf: options := -b2
-Bradford-2-Monospaced.pxf: options := -b2
-Bradford-3-Monospaced.pxf: options := -b2
-Bradford-4-Monospaced.pxf: options := -b3
-Bradford-5-Monospaced.pxf: options := -b3
-Bradford-6-Monospaced.pxf: options := -b2
-Bradford-7-Monospaced.pxf: options := -b2
-Bradford-8-Monospaced.pxf: options := -b2
+Bradford-1.pxf: options := -b2
+Bradford-2.pxf: options := -b2
+Bradford-3.pxf: options := -b2
+Bradford-4.pxf: options := -b3
+Bradford-5.pxf: options := -b3
+Bradford-6.pxf: options := -b2
+Bradford-7.pxf: options := -b2
+Bradford-8.pxf: options := -b2
 
 # NLQ401 fonts
 
@@ -359,9 +359,9 @@ Bradford-Kazmiruk-T.brad: origname = fontt.bin
 Bradford-Kazmiruk-O.brad: origname = fonto.bin
 Bradford-Kazmiruk-M.brad: origname = fontm.bin
 
-Bradford-Kazmiruk-T-Monospaced.pxf: options := -b2
-Bradford-Kazmiruk-O-Monospaced.pxf: options := -b0
-Bradford-Kazmiruk-M-Monospaced.pxf: options := -b2
+Bradford-Kazmiruk-T.pxf: options := -b2
+Bradford-Kazmiruk-O.pxf: options := -b0
+Bradford-Kazmiruk-M.pxf: options := -b2
 
 Bradford-Kazmiruk-T.brad: inputs/BRFONTS.LBR
 	lar p $< ${origname} > $@
@@ -379,7 +379,7 @@ inputs/BRAD-GRK.LBR:
 
 Bradford-Greek.brad: origname = font@.bin
 
-Bradford-Greek-Monospaced.pxf: options := -b2 -cBradford-Greek-Monospaced.cs
+Bradford-Greek.pxf: options := -b2 -cBradford-Greek.cs
 
 Bradford-Greek.brad: inputs/BRAD-GRK.LBR
 	lar p $< ${origname} > $@
@@ -388,20 +388,20 @@ Bradford-Greek.brad: inputs/BRAD-GRK.LBR
 EXTRAFON.LBR:
 	wget 'http://www.retroarchive.org/cpm/cdrom/CPM/PROGRAMS/LIST/EXTRAFON.LBR'
 
-Bradford-Extra-9-Monospaced.pxf: options := -b0
-Bradford-Extra-A-Monospaced.pxf: options := -b2 -cascii.cs
-Bradford-Extra-B-Monospaced.pxf: options := -b2
-Bradford-Extra-C-Monospaced.pxf: options := -b2
-Bradford-Extra-F-Monospaced.pxf: options := -b2
-Bradford-Extra-J-Monospaced.pxf: options := -b2
-Bradford-Extra-K-Monospaced.pxf: options := -b2
-Bradford-Extra-L-Monospaced.pxf: options := -b2
-Bradford-Extra-M-Monospaced.pxf: options := -b2
-Bradford-Extra-N-Monospaced.pxf: options := -b2
-Bradford-Extra-O-Monospaced.pxf: options := -b2
-Bradford-Extra-P-Monospaced.pxf: options := -b2
-Bradford-Extra-S-Monospaced.pxf: options := -b2
-Bradford-Extra-T-Monospaced.pxf: options := -b2
+Bradford-Extra-9.pxf: options := -b0
+Bradford-Extra-A.pxf: options := -b2 -cascii.cs
+Bradford-Extra-B.pxf: options := -b2
+Bradford-Extra-C.pxf: options := -b2
+Bradford-Extra-F.pxf: options := -b2
+Bradford-Extra-J.pxf: options := -b2
+Bradford-Extra-K.pxf: options := -b2
+Bradford-Extra-L.pxf: options := -b2
+Bradford-Extra-M.pxf: options := -b2
+Bradford-Extra-N.pxf: options := -b2
+Bradford-Extra-O.pxf: options := -b2
+Bradford-Extra-P.pxf: options := -b2
+Bradford-Extra-S.pxf: options := -b2
+Bradford-Extra-T.pxf: options := -b2
 
 Bradford-Extra-9.brad: EXTRAFON.LBR
 	lar p $< font9.bzn | uncrunch /dev/stdin
@@ -461,7 +461,7 @@ Bradford-Extra-T.brad: EXTRAFON.LBR
 
 # General Bradford font parsing rule
 
-%-Monospaced.pxf: %.brad bradford2pxf.rb
+Bradford-%.pxf: Bradford-%.brad bradford2pxf.rb
 	./bradford2pxf.rb ${options} < $< > $@
 
 # General Glyph Compositor invocation rule
@@ -566,23 +566,19 @@ inputs/glyphlist.txt:
 OVERVIEWED_FONTS = \
     EpsonFX80 EpsonFX80-Italic \
     \
-    Bradford-1-Monospaced Bradford-2-Monospaced Bradford-3-Monospaced \
-    Bradford-4-Monospaced Bradford-5-Monospaced Bradford-6-Monospaced \
-    Bradford-7-Monospaced Bradford-8-Monospaced \
+    Bradford-1 Bradford-2 Bradford-3 Bradford-4 Bradford-5 \
+    Bradford-6 Bradford-7 Bradford-8 \
     \
-    Bradford-Extra-9-Monospaced Bradford-Extra-A-Monospaced \
-    Bradford-Extra-B-Monospaced Bradford-Extra-C-Monospaced \
-    Bradford-Extra-F-Monospaced Bradford-Extra-J-Monospaced \
-    Bradford-Extra-K-Monospaced Bradford-Extra-L-Monospaced \
-    Bradford-Extra-M-Monospaced Bradford-Extra-N-Monospaced \
-    Bradford-Extra-O-Monospaced Bradford-Extra-P-Monospaced \
-    Bradford-Extra-S-Monospaced Bradford-Extra-T-Monospaced \
+    Bradford-Extra-9 Bradford-Extra-A Bradford-Extra-B \
+    Bradford-Extra-C Bradford-Extra-F Bradford-Extra-J \
+    Bradford-Extra-K Bradford-Extra-L Bradford-Extra-M \
+    Bradford-Extra-N Bradford-Extra-O Bradford-Extra-P \
+    Bradford-Extra-S Bradford-Extra-T \
     \
-    Bradford-Greek-Monospaced \
+    Bradford-Greek \
     \
-    Bradford-Kazmiruk-T-Monospaced \
-    Bradford-Kazmiruk-O-Monospaced \
-    Bradford-Kazmiruk-M-Monospaced \
+    Bradford-Kazmiruk-T Bradford-Kazmiruk-O \
+    Bradford-Kazmiruk-M \
     \
     DMP2000 \
     DMP3000-NLQ DMP3000-NLQ-Italic DMP3000-NLQ-Extra DMP3000-Draft-Extra \
