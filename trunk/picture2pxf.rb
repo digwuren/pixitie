@@ -81,6 +81,7 @@ $hsparse = false
 $origin = nil
 $cell_size = nil
 $cell_step = nil
+$cells_per_line = 16
 
 $header = []
 
@@ -96,7 +97,8 @@ GetoptLong.new(
   ['--check-horizontal-neighbours', GetoptLong::NO_ARGUMENT],
   ['--hsparse', GetoptLong::NO_ARGUMENT],
   ['--cell-size', GetoptLong::REQUIRED_ARGUMENT],
-  ['--cell-step', GetoptLong::REQUIRED_ARGUMENT]
+  ['--cell-step', GetoptLong::REQUIRED_ARGUMENT],
+  ['--cells-per-line', GetoptLong::REQUIRED_ARGUMENT]
 ).each do |opt, arg|
   case opt
   when '--origin' then $origin = Planar_Vector::parse arg
@@ -112,6 +114,7 @@ GetoptLong.new(
   when '--hsparse' then $hsparse = true
   when '--cell-size' then $cell_size = Planar_Vector::parse arg
   when '--cell-step' then $cell_step = Planar_Vector::parse arg
+  when '--cells-per-line' then $cells_per_line = arg.parse_number
   end
 end
 
@@ -148,7 +151,7 @@ $range.each do |charcode|
   charcoord = 
   # calculate the position of this char's top left dot centre
   char_origin = $origin + $cell_step *
-      Planar_Vector::fold(charcode - $range.first + $skew, 16)
+      Planar_Vector::fold(charcode - $range.first + $skew, $cells_per_line)
   (0 ... $cell_size.x).each do |dx|
     column = 0
     (0 ... $cell_size.y).each do |dy|
