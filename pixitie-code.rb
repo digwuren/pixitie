@@ -450,11 +450,23 @@ EOU
               set_encoding unicode, native_charcode
               set_decoding native_charcode, unicode
             end
+          elsif args =~ /^([\da-f]+)\s+=\s+unicode$/i then
+            native_charcode = $1.hex
+            unicode = $1.hex
+            unless exceptions.include? native_charcode then
+              set_encoding unicode, native_charcode
+              set_decoding native_charcode, unicode
+            end
           elsif args =~ /^([\da-f]+)\s*\.\.\s*([\da-f]+)\s+=\s+/i then
             natives = $1.hex .. $2.hex
-            unicodes = parse_unicode_list $'
             unless natives.first <= natives.last then
               raise "Native charcode range endpoints misordered"
+            end
+            tail = $'
+            if tail =~ /^unicode$/i then
+              unicodes = natives
+            else
+              unicodes = parse_unicode_list tail
             end
             unicodes = unicodes.to_a
             unless natives.last - natives.first + 1 ==
