@@ -19,6 +19,7 @@ RESOURCES = ascii.cs \
   Goha-12.cs Goha-14.cs Goha-16.cs \
   GohaClassic-12.cs GohaClassic-14.cs GohaClassic-16.cs \
   monobook.cs \
+  CSIDOS.cs \
   $(foreach font, $(OVERVIEWED_FONTS), $(font).pxf) \
   inputs/glyphlist.txt
 
@@ -599,6 +600,8 @@ OVERVIEWED_FONTS = \
     \
     Monobook-12 Monobook-16 Monobook-20 Monobook-24 Monobook-28 \
     Monobook-16-Bold Monobook-20-Bold Monobook-24-Bold Monobook-28-Bold \
+    \
+    CSIDOS \
     \
     Old-Hylian-Draft Old-Hylian-NLQ Old-Hylian-NLQ-Elite Old-Hylian-NLQ-Dense \
     \
