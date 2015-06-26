@@ -1,0 +1,1 @@
+Pixitie converts bitmap fonts into PostScript Type 3 fonts, applies dot matrix printer style font synthesis mechanisms if requested, and typesets text as a PostScript document using the resulting fonts.
